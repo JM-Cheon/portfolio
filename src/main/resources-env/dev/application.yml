@@ -1,0 +1,21 @@
+server:
+  port: 8887
+
+spring:
+  profiles:
+    include: common
+    active: dev
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://13.125.156.147:5432/portfolio_dev
+    username: jm
+    password: lex1509!!
+    tomcat:
+      test-on-borrow: true
+      validation-query: SELECT 1
+
+  # jpa 설정
+  jpa:
+    hibernate:
+      ddl-auto: update
