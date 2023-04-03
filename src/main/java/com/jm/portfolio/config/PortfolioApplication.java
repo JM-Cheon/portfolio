@@ -1,16 +1,16 @@
-package com.jm.portfolio;
+package com.jm.portfolio.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@Slf4j
+@ComponentScan(basePackages = "com.jm.portfolio")
 public class PortfolioApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(PortfolioApplication.class, args);
-        log.info("제대로 됐냐");
     }
 
 }
