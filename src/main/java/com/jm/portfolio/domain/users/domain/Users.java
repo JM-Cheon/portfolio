@@ -1,6 +1,6 @@
-package com.jm.portfolio.users.entity;
+package com.jm.portfolio.domain.users.domain;
 
-import com.jm.portfolio.common.entity.BaseEntity;
+import com.jm.portfolio.global.common.domain.Common;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Users extends BaseEntity {
+public class Users extends Common {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

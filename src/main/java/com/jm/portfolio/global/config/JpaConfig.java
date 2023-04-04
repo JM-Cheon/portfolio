@@ -1,4 +1,4 @@
-package com.jm.portfolio.config;
+package com.jm.portfolio.global.config;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

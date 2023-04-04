@@ -1,4 +1,4 @@
-package com.jm.portfolio.common.entity;
+package com.jm.portfolio.global.common.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import java.util.Date;
 @SuperBuilder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class BaseEntity {
+public abstract class Common {
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

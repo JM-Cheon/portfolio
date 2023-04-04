@@ -1,6 +1,4 @@
-package com.jm.portfolio.constants;
-
-import java.util.UUID;
+package com.jm.portfolio.global.constants;
 
 public interface Constants {
 

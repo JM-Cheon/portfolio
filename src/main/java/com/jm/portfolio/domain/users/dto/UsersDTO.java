@@ -1,7 +1,7 @@
-package com.jm.portfolio.users.dto;
+package com.jm.portfolio.domain.users.dto;
 
-import com.jm.portfolio.common.dto.BaseDTO;
-import com.jm.portfolio.users.entity.Users;
+import com.jm.portfolio.domain.users.domain.Users;
+import com.jm.portfolio.global.common.dto.CommonDTO;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @ToString
 @SuperBuilder
 @NoArgsConstructor
-public class UsersDTO extends BaseDTO {
+public class UsersDTO extends CommonDTO {
 
     private long idx;
     private String email;
@@ -31,6 +31,22 @@ public class UsersDTO extends BaseDTO {
 //        this.password = password;
 //        this.nickname = nickname;
 //    }
+
+    public UsersDTO (Users users) {
+        this.idx = users.getIdx();
+        this.email = users.getEmail();
+        this.password = users.getPassword();
+        this.nickname = users.getNickname();
+        this.withdrawAt = users.getWithdrawAt();
+        this.withdrawIp = users.getWithdrawIp();
+        this.isWithdraw = users.getIsWithdraw();
+        this.isDisabled = users.getIsDisabled();
+        this.isExpired = users.getIsExpired();
+        this.setCreatedAt(users.getCreatedAt());
+        this.setCreatedIp(users.getCreatedIp());
+        this.setLastUpdatedAt(users.getLastUpdatedAt());
+        this.setLastUpdatedIp(users.getLastUpdatedIp());
+    }
 
     public Users toEntity() {
         return Users.builder()

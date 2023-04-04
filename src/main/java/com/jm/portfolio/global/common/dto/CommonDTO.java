@@ -1,4 +1,4 @@
-package com.jm.portfolio.common.dto;
+package com.jm.portfolio.global.common.dto;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +10,7 @@ import java.util.Date;
 @ToString
 @SuperBuilder
 @NoArgsConstructor
-public class BaseDTO {
+public class CommonDTO {
 
     private Date createdAt;
     private Date lastUpdatedAt;
