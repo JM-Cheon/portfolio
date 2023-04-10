@@ -1,5 +1,6 @@
-package com.jm.portfolio.domain.common.domain;
+package com.jm.portfolio.global.common.domain;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +14,7 @@ import java.util.Date;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class BaseDomain {
 
     @CreatedDate
@@ -34,7 +35,9 @@ public abstract class BaseDomain {
     @Column(nullable = false)
     private String lastUpdatedIp;
 
-    public BaseDomain(String createdIp, String lastUpdatedIp) {
+    public BaseDomain(Date createdAt, Date lastUpdatedAt, String createdIp, String lastUpdatedIp) {
+        this.createdAt = createdAt;
+        this.lastUpdatedAt = lastUpdatedAt;
         this.createdIp = createdIp;
         this.lastUpdatedIp = lastUpdatedIp;
     }

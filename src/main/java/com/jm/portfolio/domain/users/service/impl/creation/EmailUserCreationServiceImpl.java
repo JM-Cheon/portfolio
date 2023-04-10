@@ -1,9 +1,9 @@
 package com.jm.portfolio.domain.users.service.impl.creation;
 
 import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
-import com.jm.portfolio.domain.users.service.UsersCreationService;
+import com.jm.portfolio.domain.users.service.UserCreationService;
 import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.domain.users.dao.UsersDAO;
+import com.jm.portfolio.domain.users.dao.UserDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,15 +13,15 @@ import javax.transaction.Transactional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class EmailUsersCreationServiceImpl implements UsersCreationService {
+public class EmailUserCreationServiceImpl implements UserCreationService {
 
-    private final UsersDAO usersDAO;
+    private final UserDAO userDAO;
 
     @Override
     @Transactional
     public void signup(UserSignupRequest newUser) {
 
         Users user = newUser.toEntity();
-        usersDAO.save(user);
+        userDAO.save(user);
     }
 }
