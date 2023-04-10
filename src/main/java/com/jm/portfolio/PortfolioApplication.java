@@ -1,11 +1,11 @@
-package com.jm.portfolio.global.config;
+package com.jm.portfolio;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.jm.portfolio")
+@EnableJpaAuditing
 public class PortfolioApplication {
 
     public static void main(String[] args) {

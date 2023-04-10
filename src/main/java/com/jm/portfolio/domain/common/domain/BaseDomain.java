@@ -1,22 +1,20 @@
-package com.jm.portfolio.global.common.domain;
+package com.jm.portfolio.domain.common.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
-@EntityListeners(AuditingEntityListener.class)
-@MappedSuperclass
-@SuperBuilder
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class Common {
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+public abstract class BaseDomain {
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -28,8 +26,16 @@ public abstract class Common {
     @Column(nullable = false)
     private Date lastUpdatedAt;
 
+    @NotEmpty
     @Column(nullable = false, updatable = false)
     private String createdIp;
 
+    @NotEmpty
+    @Column(nullable = false)
     private String lastUpdatedIp;
+
+    public BaseDomain(String createdIp, String lastUpdatedIp) {
+        this.createdIp = createdIp;
+        this.lastUpdatedIp = lastUpdatedIp;
+    }
 }

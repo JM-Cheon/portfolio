@@ -1,7 +1,7 @@
-package com.jm.portfolio.domain.users.service.impl;
+package com.jm.portfolio.domain.users.service.impl.creation;
 
+import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
 import com.jm.portfolio.domain.users.service.UsersCreationService;
-import com.jm.portfolio.domain.users.dto.UsersDTO;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dao.UsersDAO;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class EmailUsersCreationServiceImpl implements UsersCreationService {
 
     @Override
     @Transactional
-    public void signup(UsersDTO newUser) {
+    public void signup(UserSignupRequest newUser) {
 
         Users user = newUser.toEntity();
         usersDAO.save(user);

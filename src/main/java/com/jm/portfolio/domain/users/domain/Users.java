@@ -1,20 +1,19 @@
 package com.jm.portfolio.domain.users.domain;
 
-import com.jm.portfolio.global.common.domain.Common;
+import com.jm.portfolio.domain.common.domain.BaseDomain;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "Users")
-@DynamicInsert
+@Entity
+@Table(name = "users")
+@EqualsAndHashCode(of = {"idx"})
 @Getter
-@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Users extends Common {
+public class Users extends BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +34,29 @@ public class Users extends Common {
 
     private String withdrawIp;
 
-    @ColumnDefault("'N'")
     private String isWithdraw;
 
-    @ColumnDefault("'N'")
     private String isDisabled;
 
-    @ColumnDefault("'N'")
     private String isExpired;
+
+    @PrePersist
+    public void prePersist() {
+        this.isWithdraw = this.isWithdraw == null ? "N" : this.isWithdraw;
+        this.isDisabled = this.isDisabled == null ? "N" : this.isDisabled;
+        this.isExpired = this.isExpired == null ? "N" : this.isExpired;
+    }
+
+    @Builder
+    public Users (String createdIp, String lastUpdatedIp, String email, String password, String nickname, Date withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
+        super(createdIp, lastUpdatedIp);
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.withdrawAt = withdrawAt;
+        this.withdrawIp = withdrawIp;
+        this.isWithdraw = isWithdraw;
+        this.isDisabled = isDisabled;
+        this.isExpired = isExpired;
+    }
 }

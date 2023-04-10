@@ -1,7 +1,7 @@
 package com.jm.portfolio.domain.users.service;
 
-import com.jm.portfolio.domain.users.dto.UsersDTO;
+import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
 
 public interface UsersCreationService {
-    void signup(UsersDTO user);
+    void signup(UserSignupRequest newUser);
 }
