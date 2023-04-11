@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.common.domain;
+package com.jm.portfolio.global.common.base;
 
 import lombok.AccessLevel;
 import lombok.Getter;

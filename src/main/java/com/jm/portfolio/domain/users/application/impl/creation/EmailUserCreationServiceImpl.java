@@ -1,7 +1,7 @@
-package com.jm.portfolio.domain.users.service.impl.creation;
+package com.jm.portfolio.domain.users.application.impl.creation;
 
 import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
-import com.jm.portfolio.domain.users.service.UserCreationService;
+import com.jm.portfolio.domain.users.application.UserCreationService;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dao.UserDAO;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.users.service;
+package com.jm.portfolio.domain.users.application;
 
 import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
 

@@ -2,10 +2,10 @@ package com.jm.portfolio.domain.users.api;
 
 import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
-import com.jm.portfolio.domain.users.service.UserCreationService;
-import com.jm.portfolio.domain.users.service.UserRetrieveService;
+import com.jm.portfolio.domain.users.application.UserCreationService;
+import com.jm.portfolio.domain.users.application.UserRetrieveService;
+import com.jm.portfolio.global.common.paging.PagingCriteria;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,8 +39,8 @@ public class UserApi {
     @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
     @GetMapping(value = "/list")
     public List<UserResponse> getUserList (
-            @Parameter(name = "sort", description = "정렬 기준", example = "createdAt, nickname, email")
-            @RequestParam(value = "sort", required = false, defaultValue = "idx") String sort) {
-        return userRetrieveService.getUserList(sort);
+//            @Parameter(name = "sort", description = "정렬 기준", example = "createdAt, nickname, email")
+            @RequestParam PagingCriteria pagingCriteria) {
+        return userRetrieveService.getUserList(pagingCriteria);
     }
 }
