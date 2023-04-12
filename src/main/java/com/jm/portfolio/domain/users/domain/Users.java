@@ -32,10 +32,13 @@ public class Users extends BaseDomain {
 
     private String withdrawIp;
 
+    @Column(columnDefinition = "varchar(1) CHECK (is_withdraw IN ('Y', 'N'))")
     private String isWithdraw;
 
+    @Column(columnDefinition = "varchar(1) CHECK (is_disabled IN ('Y', 'N'))")
     private String isDisabled;
 
+    @Column(columnDefinition = "varchar(1) CHECK (is_expired IN ('Y', 'N'))")
     private String isExpired;
 
     @PrePersist

@@ -14,10 +14,10 @@ public class PagingDTO {
     private int total;			    // 행 전체 개수
 
     /* 현재페이지 번호(pageNum), 행 표시 수(amount), 검색 키워드(keyword), 검색 종류(type) 등*/
-    private PagingCriteria cri;			// 검색 정보
+    private Criteria cri;			// 검색 정보
 
     /* 생성자(클래스 호출 시 각 변수 값 초기화) */
-    public PagingDTO(PagingCriteria cri, int total) {
+    public PagingDTO(Criteria cri, int total) {
 
         /* cri, total 초기화 */
         this.cri = cri;
