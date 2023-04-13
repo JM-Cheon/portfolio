@@ -4,7 +4,7 @@ import com.jm.portfolio.global.common.base.BaseDomain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -27,8 +27,7 @@ public class Users extends BaseDomain {
     @Column(nullable = false)
     private String nickname;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date withdrawAt;
+    private LocalDateTime withdrawAt;
 
     private String withdrawIp;
 
@@ -49,7 +48,7 @@ public class Users extends BaseDomain {
     }
 
     @Builder
-    public Users (Date createdAt, Date lastUpdatedAt, String createdIp, String lastUpdatedIp, String email, String password, String nickname, Date withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
+    public Users (LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp, String email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
         super(createdAt, lastUpdatedAt, createdIp, lastUpdatedIp);
         this.email = email;
         this.password = password;

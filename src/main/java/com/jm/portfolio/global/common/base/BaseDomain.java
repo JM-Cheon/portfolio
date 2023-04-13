@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
@@ -18,14 +18,12 @@ import java.util.Date;
 public abstract class BaseDomain {
 
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
-    private Date lastUpdatedAt;
+    private LocalDateTime lastUpdatedAt;
 
     @NotEmpty
     @Column(nullable = false, updatable = false)
@@ -35,7 +33,7 @@ public abstract class BaseDomain {
     @Column(nullable = false)
     private String lastUpdatedIp;
 
-    public BaseDomain(Date createdAt, Date lastUpdatedAt, String createdIp, String lastUpdatedIp) {
+    public BaseDomain(LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp) {
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
         this.createdIp = createdIp;

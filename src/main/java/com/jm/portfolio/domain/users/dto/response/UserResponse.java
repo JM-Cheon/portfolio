@@ -5,7 +5,7 @@ import com.jm.portfolio.domain.users.domain.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Schema(description = "회원 정보 DTO")
 @Getter
@@ -17,7 +17,7 @@ public class UserResponse extends BaseResponse {
     @Schema(description = "닉네임")
     private String nickname;
     @Schema(description = "탈퇴 일자")
-    private Date withdrawAt;
+    private LocalDateTime withdrawAt;
     @Schema(description = "탈퇴 IP")
     private String withdrawIp;
     @Schema(description = "닉네임")

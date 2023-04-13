@@ -3,18 +3,18 @@ package com.jm.portfolio.global.common.base;
 import lombok.*;
 import org.yaml.snakeyaml.constructor.BaseConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BaseResponse {
-    private Date createdAt;
-    private Date lastUpdatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastUpdatedAt;
     private String createdIp;
     private String lastUpdatedIp;
 
-    public BaseResponse (Date createdAt, Date lastUpdatedAt, String createdIp, String lastUpdatedIp) {
+    public BaseResponse (LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp) {
         this.createdAt = createdAt;
         this.lastUpdatedAt = lastUpdatedAt;
         this.createdIp = createdIp;

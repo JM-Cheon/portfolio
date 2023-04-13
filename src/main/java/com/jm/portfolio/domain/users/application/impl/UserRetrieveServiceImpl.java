@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,8 @@ public class UserRetrieveServiceImpl implements UserRetrieveService {
         String orderBy = criteria.getOrderBy();
         String searchBy = criteria.getSearchBy();
         String searchValue = criteria.getSearchValue();
+        LocalDateTime startDate = criteria.getStartDate();
+        LocalDateTime endDate = criteria.getEndDate();
 
         Pageable paging;
         if(orderBy.equals("asc")) {
@@ -40,7 +43,7 @@ public class UserRetrieveServiceImpl implements UserRetrieveService {
         }
 
         Page<Users> result;
-        if(searchValue == null || searchValue.isBlank() || searchValue.isEmpty()) {
+        if((searchValue == null || searchValue.isBlank() || searchValue.isEmpty()) && (startDate == null && endDate == null)) {
             result = userDAO.findAll(paging);
         } else {
             switch (searchBy) {
@@ -51,30 +54,30 @@ public class UserRetrieveServiceImpl implements UserRetrieveService {
                     result = userDAO.findByNicknameContains(paging, searchValue);
                     break;
                 case "createdAt":
-                    if(criteria.getStartDate() == null) {
-                        result = userDAO.findByCreatedAtAfter(paging, criteria.getEndDate());
-                    } else if (criteria.getEndDate() == null) {
-                        result = userDAO.findByCreatedAtBefore(paging, criteria.getStartDate());
+                    if(startDate == null) {
+                        result = userDAO.findByCreatedAtBefore(paging, endDate);
+                    } else if (endDate == null) {
+                        result = userDAO.findByCreatedAtAfter(paging, startDate);
                     } else {
-                        result = userDAO.findByCreatedAtBetween(paging, criteria.getStartDate(), criteria.getEndDate());
+                        result = userDAO.findByCreatedAtBetween(paging, startDate, endDate);
                     }
                     break;
                 case "lastUpdatedAt":
-                    if(criteria.getStartDate() == null) {
-                        result = userDAO.findByLastUpdatedAtAfter(paging, criteria.getEndDate());
-                    } else if (criteria.getEndDate() == null) {
-                        result = userDAO.findByLastUpdatedAtBefore(paging, criteria.getStartDate());
+                    if(startDate == null) {
+                        result = userDAO.findByLastUpdatedAtBefore(paging, endDate);
+                    } else if (endDate == null) {
+                        result = userDAO.findByLastUpdatedAtAfter(paging, startDate);
                     } else {
-                        result = userDAO.findByLastUpdatedAtBetween(paging, criteria.getStartDate(), criteria.getEndDate());
+                        result = userDAO.findByLastUpdatedAtBetween(paging, startDate, endDate);
                     }
                     break;
                 case "withdrawAt":
-                    if(criteria.getStartDate() == null) {
-                        result = userDAO.findByWithdrawAtAfter(paging, criteria.getEndDate());
-                    } else if (criteria.getEndDate() == null) {
-                        result = userDAO.findByWithdrawAtBefore(paging, criteria.getStartDate());
+                    if(startDate == null) {
+                        result = userDAO.findByWithdrawAtBefore(paging, endDate);
+                    } else if (endDate == null) {
+                        result = userDAO.findByWithdrawAtAfter(paging, startDate);
                     } else {
-                        result = userDAO.findByWithdrawAtBetween(paging, criteria.getStartDate(), criteria.getEndDate());
+                        result = userDAO.findByWithdrawAtBetween(paging, startDate, endDate);
                     }
                     break;
                 case "isWithdraw":
