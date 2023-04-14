@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.users.dto.response;
 
-import com.jm.portfolio.global.common.base.BaseResponse;
+import com.jm.portfolio.global.common.base.dto.response.BaseResponse;
 import com.jm.portfolio.domain.users.domain.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;

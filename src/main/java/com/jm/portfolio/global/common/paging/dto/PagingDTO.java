@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.common.paging;
+package com.jm.portfolio.global.common.paging.dto;
 
 import lombok.Getter;
 import lombok.Setter;

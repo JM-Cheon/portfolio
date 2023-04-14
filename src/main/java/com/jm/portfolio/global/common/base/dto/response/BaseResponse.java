@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.common.base;
+package com.jm.portfolio.global.common.base.dto.response;
 
 import lombok.*;
 import org.yaml.snakeyaml.constructor.BaseConstructor;

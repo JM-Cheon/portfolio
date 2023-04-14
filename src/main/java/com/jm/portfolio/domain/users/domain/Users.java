@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.users.domain;
 
-import com.jm.portfolio.global.common.base.BaseDomain;
+import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 
 import javax.persistence.*;

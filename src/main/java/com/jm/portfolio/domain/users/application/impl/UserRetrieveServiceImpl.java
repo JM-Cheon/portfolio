@@ -4,7 +4,7 @@ import com.jm.portfolio.domain.users.dao.UserDAO;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.domain.users.application.UserRetrieveService;
-import com.jm.portfolio.global.common.paging.Criteria;
+import com.jm.portfolio.global.common.paging.dto.Criteria;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

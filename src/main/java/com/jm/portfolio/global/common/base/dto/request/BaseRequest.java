@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.common.base;
+package com.jm.portfolio.global.common.base.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;
