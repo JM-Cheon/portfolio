@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.domain;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 
@@ -8,36 +9,39 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(of = {"idx"}, callSuper = false)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Users extends BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
-    private long idx;
+    @Column(name = "id", updatable = false)
+    private long id;
 
-    @Column(updatable = false, nullable = false, unique = true)
-    private String email;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false, unique = true, updatable = false, length = 50))
+    private Email email;
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(name = "nickname", nullable = false, unique = true)
     private String nickname;
 
+    @Column(name = "withdraw_at")
     private LocalDateTime withdrawAt;
 
+    @Column(name = "withdraw_ip")
     private String withdrawIp;
 
-    @Column(columnDefinition = "varchar(1) CHECK (is_withdraw IN ('Y', 'N'))")
+    @Column(name = "is_withdraw", columnDefinition = "varchar(1) CHECK (is_withdraw IN ('Y', 'N'))")
     private String isWithdraw;
 
-    @Column(columnDefinition = "varchar(1) CHECK (is_disabled IN ('Y', 'N'))")
+    @Column(name = "is_disabled", columnDefinition = "varchar(1) CHECK (is_disabled IN ('Y', 'N'))")
     private String isDisabled;
 
-    @Column(columnDefinition = "varchar(1) CHECK (is_expired IN ('Y', 'N'))")
+    @Column(name = "is_expired", columnDefinition = "varchar(1) CHECK (is_expired IN ('Y', 'N'))")
     private String isExpired;
 
     @PrePersist
@@ -48,7 +52,7 @@ public class Users extends BaseDomain {
     }
 
     @Builder
-    public Users (LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp, String email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
+    public Users (LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp, Email email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
         super(createdAt, lastUpdatedAt, createdIp, lastUpdatedIp);
         this.email = email;
         this.password = password;

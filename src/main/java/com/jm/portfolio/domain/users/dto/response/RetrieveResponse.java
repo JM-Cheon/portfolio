@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.dto.response;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.global.common.base.dto.response.BaseResponse;
 import com.jm.portfolio.domain.users.domain.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,9 +12,9 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class UserResponse extends BaseResponse {
+public class RetrieveResponse extends BaseResponse {
     @Schema(description = "아메일")
-    private String email;
+    private Email email;
     @Schema(description = "닉네임")
     private String nickname;
     @Schema(description = "탈퇴 일자")
@@ -27,7 +28,7 @@ public class UserResponse extends BaseResponse {
     @Schema(description = "계정 만료 여부")
     private String isExpired;
 
-    public UserResponse(final Users users) {
+    public RetrieveResponse(final Users users) {
         super(users.getCreatedAt(), users.getLastUpdatedAt(), users.getCreatedIp(), users.getLastUpdatedIp());
         this.email = users.getEmail();
         this.nickname = users.getNickname();

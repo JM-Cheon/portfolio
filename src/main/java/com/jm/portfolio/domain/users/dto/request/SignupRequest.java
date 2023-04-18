@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.dto.request;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.global.common.base.dto.request.BaseRequest;
 import com.jm.portfolio.domain.users.domain.Users;
 import lombok.AccessLevel;
@@ -10,9 +11,9 @@ import javax.validation.Valid;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public class UserSignupRequest extends BaseRequest {
+public class SignupRequest extends BaseRequest {
     @Valid
-    private String email;
+    private Email email;
     @Valid
     private String password;
     @Valid

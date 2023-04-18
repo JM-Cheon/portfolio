@@ -1,8 +1,9 @@
 package com.jm.portfolio.domain.users.api;
 
-import com.jm.portfolio.domain.users.dto.request.UserSignupRequest;
-import com.jm.portfolio.domain.users.application.UserCreationService;
-import com.jm.portfolio.domain.users.application.UserRetrieveService;
+import com.jm.portfolio.domain.users.dto.request.SigninRequest;
+import com.jm.portfolio.domain.users.dto.request.SignupRequest;
+import com.jm.portfolio.domain.users.application.CreationService;
+import com.jm.portfolio.domain.users.application.RetrieveService;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.paging.dto.PagingDTO;
 import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
@@ -13,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,12 +22,12 @@ import java.time.LocalDateTime;
 @Slf4j
 @Tag(name="회원", description = "회원 관련 API")
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserApi {
 
-    private final UserCreationService userCreationService;
-    private final UserRetrieveService userRetrieveService;
+    private final CreationService creationService;
+    private final RetrieveService retrieveService;
 
     /**
      * 회원 가입 기능
@@ -35,14 +35,20 @@ public class UserApi {
      * @return
      */
     @Operation(summary = "회원가입", description = "회원가입 메소드")
-    @PostMapping(value = "/user/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDTO> signUp (@RequestBody UserSignupRequest newUser) {
-        userCreationService.signup(newUser);
+    @PostMapping(value = "/signup")
+    public ResponseEntity<ResponseDTO> signup (@RequestBody SignupRequest newUser) {
+        creationService.signup(newUser);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원 가입 성공"));
     }
 
+    @Operation(summary = "로그인", description = "로그인 메소드")
+    @PostMapping(value = "/signin")
+    public ResponseEntity<ResponseDTO> signin (@RequestBody SigninRequest user) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공"));
+    }
+
     @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
-    @GetMapping(value = "/admin/user/list")
+    @GetMapping(value = "/list")
     public ResponseEntity<ResponseDTO> getUserList (
             @RequestParam(required = false, defaultValue = "1") String offset,
             @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
@@ -55,8 +61,8 @@ public class UserApi {
         Criteria criteria = new Criteria(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
         PagingResponse response = new PagingResponse();
-        response.setData(userRetrieveService.getUserList(criteria));
-        response.setPageInfo(new PagingDTO(criteria, userRetrieveService.getUserTotalCount()));
+        response.setData(retrieveService.getUserList(criteria));
+        response.setPageInfo(new PagingDTO(criteria, retrieveService.getUserTotalCount()));
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
     }
