@@ -1,12 +1,10 @@
 package com.jm.portfolio.domain.users.domain;
 
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "role")
@@ -27,4 +25,11 @@ public class Role extends BaseDomain {
     @ManyToOne
     @JoinColumn(name = "auth_code", insertable = false, updatable = false)
     private Authority authority;
+
+    @Builder
+    public Role(LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp, long userIdx, String authCode) {
+        super(createdAt, lastUpdatedAt, createdIp, lastUpdatedIp);
+        this.userIdx = userIdx;
+        this.authCode = authCode;
+    }
 }

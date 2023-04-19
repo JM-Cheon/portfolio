@@ -11,8 +11,7 @@ import java.time.LocalDateTime;
 @Schema(description = "회원 정보 DTO")
 @Getter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class RetrieveResponse extends BaseResponse {
+public class UserResponse extends BaseResponse {
     @Schema(description = "아메일")
     private Email email;
     @Schema(description = "닉네임")
@@ -28,7 +27,7 @@ public class RetrieveResponse extends BaseResponse {
     @Schema(description = "계정 만료 여부")
     private String isExpired;
 
-    public RetrieveResponse(final Users users) {
+    public UserResponse(final Users users) {
         super(users.getCreatedAt(), users.getLastUpdatedAt(), users.getCreatedIp(), users.getLastUpdatedIp());
         this.email = users.getEmail();
         this.nickname = users.getNickname();

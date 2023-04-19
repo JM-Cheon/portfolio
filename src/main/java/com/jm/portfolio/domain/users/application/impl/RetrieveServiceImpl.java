@@ -2,7 +2,7 @@ package com.jm.portfolio.domain.users.application.impl;
 
 import com.jm.portfolio.domain.users.dao.UserDAO;
 import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.domain.users.dto.response.RetrieveResponse;
+import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.domain.users.application.RetrieveService;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class RetrieveServiceImpl implements RetrieveService {
     private final UserDAO userDAO;
 
     @Override
-    public List<RetrieveResponse> getUserList(Criteria criteria) {
+    public List<UserResponse> getUserList(Criteria criteria) {
         int index = criteria.getPageNo() - 1;
         int count = criteria.getAmount();
         String sortBy = criteria.getSortBy();
@@ -109,7 +109,7 @@ public class RetrieveServiceImpl implements RetrieveService {
 
         List<Users> userList = result.getContent();
 
-        return userList.stream().map(RetrieveResponse::new).collect(Collectors.toList());
+        return userList.stream().map(UserResponse::new).collect(Collectors.toList());
     }
 
     @Override

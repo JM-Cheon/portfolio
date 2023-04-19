@@ -4,10 +4,11 @@ import com.jm.portfolio.domain.users.dto.request.SigninRequest;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.application.CreationService;
 import com.jm.portfolio.domain.users.application.RetrieveService;
+import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.paging.dto.PagingDTO;
 import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
-import com.jm.portfolio.global.common.response.ResponseDTO;
+import com.jm.portfolio.global.common.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -36,20 +37,20 @@ public class UserApi {
      */
     @Operation(summary = "회원가입", description = "회원가입 메소드")
     @PostMapping(value = "/signup")
-    public ResponseEntity<ResponseDTO> signup (@RequestBody SignupRequest newUser) {
-        creationService.signup(newUser);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원 가입 성공"));
+    public ResponseEntity<StatusResponse> signup (@RequestBody SignupRequest newUser) {
+        UserResponse user = creationService.signup(newUser);
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success"));
     }
 
     @Operation(summary = "로그인", description = "로그인 메소드")
     @PostMapping(value = "/signin")
-    public ResponseEntity<ResponseDTO> signin (@RequestBody SigninRequest user) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공"));
+    public ResponseEntity<StatusResponse> signin (@RequestBody SigninRequest user) {
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success"));
     }
 
     @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
     @GetMapping(value = "/list")
-    public ResponseEntity<ResponseDTO> getUserList (
+    public ResponseEntity<StatusResponse> getUserList (
             @RequestParam(required = false, defaultValue = "1") String offset,
             @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
             @RequestParam(required = false, defaultValue = "desc") String orderBy,
@@ -64,6 +65,6 @@ public class UserApi {
         response.setData(retrieveService.getUserList(criteria));
         response.setPageInfo(new PagingDTO(criteria, retrieveService.getUserTotalCount()));
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", response));
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", response));
     }
 }

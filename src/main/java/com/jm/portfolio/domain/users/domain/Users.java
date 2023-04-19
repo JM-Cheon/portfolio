@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(of = {"id"}, callSuper = false)
+@EqualsAndHashCode(of = {"idx"}, callSuper = false)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Users extends BaseDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false)
-    private long id;
+    @Column(name = "idx", updatable = false)
+    private long idx;
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false, unique = true, updatable = false, length = 50))
