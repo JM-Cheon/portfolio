@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class Authority extends BaseDomain {
 
     @Id
-    @Column(name = "auth_code", updatable = false, nullable = false)
+    @Column(name = "auth_code", nullable = false)
     private String authCode;
 
     @Column(name = "auth_name", nullable = false, unique = true)
