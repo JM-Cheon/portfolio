@@ -52,8 +52,8 @@ public class Users extends BaseDomain {
     }
 
     @Builder
-    public Users (LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp, Email email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
-        super(createdAt, lastUpdatedAt, createdIp, lastUpdatedIp);
+    public Users (String createdIp, String lastUpdatedIp, Email email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
+        super(createdIp, lastUpdatedIp);
         this.email = email;
         this.password = password;
         this.nickname = nickname;

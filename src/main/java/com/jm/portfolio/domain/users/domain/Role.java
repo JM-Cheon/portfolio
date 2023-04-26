@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @IdClass(RolePK.class)
 @EqualsAndHashCode(of = {"userIdx", "authCode"}, callSuper = false)
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Role extends BaseDomain {
 
     @Id
@@ -27,8 +27,8 @@ public class Role extends BaseDomain {
     private Authority authority;
 
     @Builder
-    public Role(LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp, long userIdx, String authCode) {
-        super(createdAt, lastUpdatedAt, createdIp, lastUpdatedIp);
+    public Role(String createdIp, String lastUpdatedIp, long userIdx, String authCode) {
+        super(createdIp, lastUpdatedIp);
         this.userIdx = userIdx;
         this.authCode = authCode;
     }

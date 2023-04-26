@@ -5,6 +5,8 @@ import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.domain.users.application.RetrieveService;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
+import com.jm.portfolio.global.common.paging.dto.PagingDTO;
+import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,7 +27,7 @@ public class RetrieveServiceImpl implements RetrieveService {
     private final UserDAO userDAO;
 
     @Override
-    public List<UserResponse> getUserList(Criteria criteria) {
+    public PagingResponse getUserList(Criteria criteria) {
         int index = criteria.getPageNo() - 1;
         int count = criteria.getAmount();
         String sortBy = criteria.getSortBy();
@@ -107,13 +109,10 @@ public class RetrieveServiceImpl implements RetrieveService {
             }
         }
 
-        List<Users> userList = result.getContent();
+        PagingResponse response = new PagingResponse();
+        response.setData(result.getContent().stream().map(UserResponse::new).collect(Collectors.toList()));
+        response.setPageInfo(new PagingDTO(criteria, userDAO.maxUserIdx()));
 
-        return userList.stream().map(UserResponse::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public int getUserTotalCount() {
-        return userDAO.findAll().size();
+        return response;
     }
 }

@@ -6,6 +6,8 @@ import com.jm.portfolio.domain.users.domain.Authority;
 import com.jm.portfolio.domain.users.dto.request.AuthSaveRequest;
 import com.jm.portfolio.domain.users.dto.response.AuthResponse;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
+import com.jm.portfolio.global.common.paging.dto.PagingDTO;
+import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,7 +33,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public List<AuthResponse> getAuthList(Criteria criteria) {
+    public PagingResponse getAuthList(Criteria criteria) {
 
         int index = criteria.getPageNo() - 1;
         int count = criteria.getAmount();
@@ -93,13 +95,10 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
-        List<Authority> authList = result.getContent();
+        PagingResponse response = new PagingResponse();
+        response.setData(result.getContent().stream().map(AuthResponse::new).collect(Collectors.toList()));
+        response.setPageInfo(new PagingDTO(criteria, authorityDAO.countAuthCode()));
 
-        return authList.stream().map(AuthResponse::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public int getAuthTotalCount() {
-        return authorityDAO.countAuthCode();
+        return response;
     }
 }

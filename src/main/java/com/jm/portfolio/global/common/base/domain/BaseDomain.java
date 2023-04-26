@@ -33,9 +33,9 @@ public abstract class BaseDomain {
     @Column(nullable = false)
     private String lastUpdatedIp;
 
-    public BaseDomain(LocalDateTime createdAt, LocalDateTime lastUpdatedAt, String createdIp, String lastUpdatedIp) {
-        this.createdAt = createdAt;
-        this.lastUpdatedAt = lastUpdatedAt;
+    public BaseDomain(String createdIp, String lastUpdatedIp) {
+//        this.createdAt = createdAt;
+//        this.lastUpdatedAt = lastUpdatedAt;
         this.createdIp = createdIp;
         this.lastUpdatedIp = lastUpdatedIp;
     }

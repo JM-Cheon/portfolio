@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.dao;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +33,6 @@ public interface UserDAO extends JpaRepository<Users, Long> {
     Page<Users> findByLastUpdatedAtBetween(Pageable paging, LocalDateTime startDate, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtBefore(Pageable paging, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtAfter(Pageable paging, LocalDateTime startDate);
+
+    boolean existsByEmail(Email email);
 }
