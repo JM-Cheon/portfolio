@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface RetrieveService {
 
-    PagingResponse getUserList(Criteria criteria);
+    UserResponse myInfo(String email);
 }

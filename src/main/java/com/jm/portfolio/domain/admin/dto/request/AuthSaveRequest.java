@@ -1,6 +1,6 @@
-package com.jm.portfolio.domain.users.dto.request;
+package com.jm.portfolio.domain.admin.dto.request;
 
-import com.jm.portfolio.domain.users.domain.Authority;
+import com.jm.portfolio.domain.admin.domain.Authority;
 import com.jm.portfolio.global.common.base.dto.request.BaseRequest;
 import lombok.AccessLevel;
 import lombok.Getter;

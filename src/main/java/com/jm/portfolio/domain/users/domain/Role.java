@@ -1,10 +1,10 @@
 package com.jm.portfolio.domain.users.domain;
 
+import com.jm.portfolio.domain.admin.domain.Authority;
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "role")

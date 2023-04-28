@@ -1,7 +1,5 @@
 package com.jm.portfolio.global.error.exception;
 
-import com.jm.portfolio.global.error.constants.ErrorCode;
-
 public class BusinessException extends RuntimeException {
 
     private ErrorCode errorCode;

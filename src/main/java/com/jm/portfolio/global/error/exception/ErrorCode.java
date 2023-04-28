@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.error.constants;
+package com.jm.portfolio.global.error.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

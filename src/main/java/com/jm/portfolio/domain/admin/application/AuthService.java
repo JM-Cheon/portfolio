@@ -1,10 +1,8 @@
-package com.jm.portfolio.domain.users.application;
+package com.jm.portfolio.domain.admin.application;
 
-import com.jm.portfolio.domain.users.dto.request.AuthSaveRequest;
+import com.jm.portfolio.domain.admin.dto.request.AuthSaveRequest;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
-
-import java.util.List;
 
 public interface AuthService {
     void saveAuth(AuthSaveRequest newAuth);

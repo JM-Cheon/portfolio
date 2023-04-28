@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.users.dao;
+package com.jm.portfolio.domain.users.repository;
 
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
@@ -11,11 +11,10 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 
 @Repository
-public interface UserDAO extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<Users, Long> {
 
     @Query("SELECT MAX(u.idx) FROM Users u")
     int maxUserIdx();
-
     Page<Users> findByEmailContains(Pageable paging, String email);
     Page<Users> findByNicknameContains(Pageable paging, String nickname);
     Page<Users> findByCreatedIpContains(Pageable paging, String createdIp);
@@ -33,6 +32,6 @@ public interface UserDAO extends JpaRepository<Users, Long> {
     Page<Users> findByLastUpdatedAtBetween(Pageable paging, LocalDateTime startDate, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtBefore(Pageable paging, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtAfter(Pageable paging, LocalDateTime startDate);
-
     boolean existsByEmail(Email email);
+    Users findByIdx(long userIdx);
 }

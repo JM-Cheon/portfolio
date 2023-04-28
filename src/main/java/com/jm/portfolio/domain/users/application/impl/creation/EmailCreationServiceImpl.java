@@ -1,11 +1,11 @@
 package com.jm.portfolio.domain.users.application.impl.creation;
 
-import com.jm.portfolio.domain.users.dao.RoleDAO;
+import com.jm.portfolio.domain.users.repository.RoleRepository;
 import com.jm.portfolio.domain.users.domain.Role;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.application.CreationService;
 import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.domain.users.dao.UserDAO;
+import com.jm.portfolio.domain.users.repository.UserRepository;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.domain.users.exception.EmailDuplicateException;
 import lombok.RequiredArgsConstructor;
@@ -14,29 +14,29 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-@Service
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class EmailCreationServiceImpl implements CreationService {
 
-    private final UserDAO userDAO;
-    private final RoleDAO roleDAO;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     @Transactional
     public UserResponse signup(SignupRequest newUser) {
 
-        if(userDAO.existsByEmail(newUser.getEmail())) {
+        if(userRepository.existsByEmail(newUser.getEmail())) {
             throw new EmailDuplicateException(newUser.getEmail());
         }
 
         Users user = newUser.toEntity();
         //TODO: 비밀번호 암호화
-        userDAO.save(user);
+        userRepository.save(user);
 
-        int maxIdx = userDAO.maxUserIdx();
+        int maxIdx = userRepository.maxUserIdx();
         Role role = new Role(newUser.getCreatedIp(), newUser.getLastUpdatedIp(), maxIdx, "USER");
-        roleDAO.save(role);
+        roleRepository.save(role);
 
         return new UserResponse(user);
     }

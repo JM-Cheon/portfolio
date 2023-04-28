@@ -1,10 +1,10 @@
-package com.jm.portfolio.domain.users.application.impl;
+package com.jm.portfolio.domain.admin.application.impl;
 
-import com.jm.portfolio.domain.users.application.AuthService;
-import com.jm.portfolio.domain.users.dao.AuthorityDAO;
-import com.jm.portfolio.domain.users.domain.Authority;
-import com.jm.portfolio.domain.users.dto.request.AuthSaveRequest;
-import com.jm.portfolio.domain.users.dto.response.AuthResponse;
+import com.jm.portfolio.domain.admin.application.AuthService;
+import com.jm.portfolio.domain.admin.repository.AuthRepository;
+import com.jm.portfolio.domain.admin.domain.Authority;
+import com.jm.portfolio.domain.admin.dto.request.AuthSaveRequest;
+import com.jm.portfolio.domain.admin.dto.response.AuthResponse;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.paging.dto.PagingDTO;
 import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,11 +24,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final AuthorityDAO authorityDAO;
+    private final AuthRepository authRepository;
 
     @Override
     public void saveAuth(AuthSaveRequest newAuth) {
-        authorityDAO.save(newAuth.toEntity());
+        authRepository.save(newAuth.toEntity());
     }
 
     @Override
@@ -53,51 +52,51 @@ public class AuthServiceImpl implements AuthService {
 
         Page<Authority> result;
         if((searchValue == null || searchValue.isBlank() || searchValue.isEmpty()) && (startDate == null && endDate == null)) {
-            result = authorityDAO.findAll(paging);
+            result = authRepository.findAll(paging);
         } else {
             switch (searchBy) {
                 case "authCode":
-                    result = authorityDAO.findByAuthCodeContains(paging, searchValue);
+                    result = authRepository.findByAuthCodeContains(paging, searchValue);
                     break;
                 case "authName":
-                    result = authorityDAO.findByAuthNameContains(paging, searchValue);
+                    result = authRepository.findByAuthNameContains(paging, searchValue);
                     break;
                 case "authDesc":
-                    result = authorityDAO.findByAuthDescContains(paging, searchValue);
+                    result = authRepository.findByAuthDescContains(paging, searchValue);
                     break;
                 case "createdAt":
                     if(startDate == null) {
-                        result = authorityDAO.findByCreatedAtBefore(paging, endDate);
+                        result = authRepository.findByCreatedAtBefore(paging, endDate);
                     } else if (endDate == null) {
-                        result = authorityDAO.findByCreatedAtAfter(paging, startDate);
+                        result = authRepository.findByCreatedAtAfter(paging, startDate);
                     } else {
-                        result = authorityDAO.findByCreatedAtBetween(paging, startDate, endDate);
+                        result = authRepository.findByCreatedAtBetween(paging, startDate, endDate);
                     }
                     break;
                 case "lastUpdatedAt":
                     if(startDate == null) {
-                        result = authorityDAO.findByLastUpdatedAtBefore(paging, endDate);
+                        result = authRepository.findByLastUpdatedAtBefore(paging, endDate);
                     } else if (endDate == null) {
-                        result = authorityDAO.findByLastUpdatedAtAfter(paging, startDate);
+                        result = authRepository.findByLastUpdatedAtAfter(paging, startDate);
                     } else {
-                        result = authorityDAO.findByLastUpdatedAtBetween(paging, startDate, endDate);
+                        result = authRepository.findByLastUpdatedAtBetween(paging, startDate, endDate);
                     }
                     break;
                 case "createdIp":
-                    result = authorityDAO.findByCreatedIpContains(paging, searchValue);
+                    result = authRepository.findByCreatedIpContains(paging, searchValue);
                     break;
                 case "lastUpdatedIp":
-                    result = authorityDAO.findByLastUpdatedIpContains(paging, searchValue);
+                    result = authRepository.findByLastUpdatedIpContains(paging, searchValue);
                     break;
                 default:
-                    result = authorityDAO.findAll(paging);
+                    result = authRepository.findAll(paging);
                     break;
             }
         }
 
         PagingResponse response = new PagingResponse();
         response.setData(result.getContent().stream().map(AuthResponse::new).collect(Collectors.toList()));
-        response.setPageInfo(new PagingDTO(criteria, authorityDAO.countAuthCode()));
+        response.setPageInfo(new PagingDTO(criteria, authRepository.countAuthCode()));
 
         return response;
     }

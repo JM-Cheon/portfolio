@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.users.domain;
+package com.jm.portfolio.domain.admin.domain;
 
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;

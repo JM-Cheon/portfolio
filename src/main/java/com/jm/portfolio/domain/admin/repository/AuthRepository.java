@@ -1,6 +1,6 @@
-package com.jm.portfolio.domain.users.dao;
+package com.jm.portfolio.domain.admin.repository;
 
-import com.jm.portfolio.domain.users.domain.Authority;
+import com.jm.portfolio.domain.admin.domain.Authority;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 
 @Repository
-public interface AuthorityDAO extends JpaRepository<Authority, String> {
+public interface AuthRepository extends JpaRepository<Authority, String> {
 
     @Query("SELECT COUNT(a.authCode) FROM Authority a")
     int countAuthCode();

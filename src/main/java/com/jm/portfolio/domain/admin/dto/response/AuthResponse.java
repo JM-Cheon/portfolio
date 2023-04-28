@@ -1,7 +1,6 @@
-package com.jm.portfolio.domain.users.dto.response;
+package com.jm.portfolio.domain.admin.dto.response;
 
-import com.jm.portfolio.domain.users.domain.Authority;
-import com.jm.portfolio.domain.users.domain.Users;
+import com.jm.portfolio.domain.admin.domain.Authority;
 import com.jm.portfolio.global.common.base.dto.response.BaseResponse;
 import lombok.Getter;
 import lombok.ToString;
