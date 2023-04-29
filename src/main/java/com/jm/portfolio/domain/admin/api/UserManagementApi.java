@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.admin.api;
 
-import com.jm.portfolio.domain.admin.application.RetrieveService;
+import com.jm.portfolio.domain.admin.application.UserManageService;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +22,9 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/v1/admin/user")
 @RequiredArgsConstructor
-public class UserApi {
+public class UserManagementApi {
 
-    private final RetrieveService retrieveService;
+    private final UserManageService userManageService;
 
     @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
     @GetMapping(value = "/list")
@@ -39,6 +39,6 @@ public class UserApi {
     ) {
         Criteria criteria = new Criteria(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", retrieveService.getUserList(criteria)));
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(criteria)));
     }
 }

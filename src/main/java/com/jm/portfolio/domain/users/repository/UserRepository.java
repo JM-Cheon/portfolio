@@ -33,5 +33,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
     Page<Users> findByLastUpdatedAtBefore(Pageable paging, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtAfter(Pageable paging, LocalDateTime startDate);
     boolean existsByEmail(Email email);
-    Users findByIdx(long userIdx);
+    @Query("SELECT u FROM Users u WHERE u.email = ?1")
+    Users findByEmail(Email email);
 }

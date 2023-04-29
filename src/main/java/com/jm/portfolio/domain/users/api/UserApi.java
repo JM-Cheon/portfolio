@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.api;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.dto.request.SigninRequest;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.application.CreationService;
@@ -43,8 +44,8 @@ public class UserApi {
     }
 
     @Operation(summary = "회원 본인의 정보", description = "회원 본인의 정보를 조회하는 메소드")
-    @GetMapping(value = "/my")
-    public ResponseEntity<StatusResponse> myInfo (@RequestParam @Valid String email) {
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", retrieveService.myInfo(email)));
+    @GetMapping(value = "/{email}")
+    public ResponseEntity<StatusResponse> myInfo (@PathVariable("email") @Valid String userEmail) {
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", retrieveService.myInfo(Email.of(userEmail))));
     }
 }

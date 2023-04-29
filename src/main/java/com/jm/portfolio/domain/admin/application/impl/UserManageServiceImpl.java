@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.admin.application.impl;
 
-import com.jm.portfolio.domain.admin.application.RetrieveService;
+import com.jm.portfolio.domain.admin.application.UserManageService;
 import com.jm.portfolio.domain.users.repository.UserRepository;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RetrieveServiceImpl implements RetrieveService {
+public class UserManageServiceImpl implements UserManageService {
 
     private final UserRepository userRepository;
 
