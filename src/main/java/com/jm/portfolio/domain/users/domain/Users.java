@@ -3,6 +3,7 @@ package com.jm.portfolio.domain.users.domain;
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -62,5 +63,10 @@ public class Users extends BaseDomain {
         this.isWithdraw = isWithdraw;
         this.isDisabled = isDisabled;
         this.isExpired = isExpired;
+    }
+
+    public Users hashPassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+        return this;
     }
 }

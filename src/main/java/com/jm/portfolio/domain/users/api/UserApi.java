@@ -1,6 +1,7 @@
 package com.jm.portfolio.domain.users.api;
 
 import com.jm.portfolio.domain.model.Email;
+import com.jm.portfolio.domain.users.application.SigninService;
 import com.jm.portfolio.domain.users.dto.request.SigninRequest;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.application.CreationService;
@@ -25,6 +26,7 @@ public class UserApi {
 
     private final RetrieveService retrieveService;
     private final CreationService creationService;
+    private final SigninService signinService;
 
     /**
      * 회원 가입 기능
@@ -40,7 +42,7 @@ public class UserApi {
     @Operation(summary = "로그인", description = "로그인 메소드")
     @PostMapping(value = "/signin")
     public ResponseEntity<StatusResponse> signin (@RequestBody @Valid SigninRequest user) {
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success"));
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", signinService.signin(user)));
     }
 
     @Operation(summary = "회원 본인의 정보", description = "회원 본인의 정보를 조회하는 메소드")

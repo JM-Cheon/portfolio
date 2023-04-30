@@ -8,8 +8,10 @@ import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.repository.UserRepository;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.domain.users.exception.EmailDuplicateException;
+import com.jm.portfolio.global.error.exception.InvalidValueException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +23,7 @@ public class EmailCreationServiceImpl implements CreationService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -31,7 +34,9 @@ public class EmailCreationServiceImpl implements CreationService {
         }
 
         Users user = newUser.toEntity();
-        //TODO: 비밀번호 암호화
+        log.debug(user.toString());
+        user.hashPassword(passwordEncoder);
+        log.debug(user.toString());
         userRepository.save(user);
 
         int maxIdx = userRepository.maxUserIdx();

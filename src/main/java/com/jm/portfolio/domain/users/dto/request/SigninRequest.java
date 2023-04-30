@@ -1,6 +1,7 @@
 package com.jm.portfolio.domain.users.dto.request;
 
 import com.jm.portfolio.domain.model.Email;
+import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.global.common.base.dto.request.BaseRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -15,4 +16,11 @@ public class SigninRequest extends BaseRequest {
     private Email email;
     @Valid
     private String password;
+
+    public Users toEntity() {
+        return Users.builder()
+                .email(email)
+                .password(password)
+                .build();
+    }
 }
