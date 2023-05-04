@@ -1,7 +1,19 @@
+buildscript {
+    ext {
+        // resources
+        profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
+        resourcesDir =  "src/main/resources-env/${profile}"
+        // queryDsl
+        queryDslVersion = '5.0.0'
+        querydslDir = "$buildDir/generated/querydsl"
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.8'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version '1.0.10'
 }
 
 group = 'com.jm'
@@ -16,6 +28,9 @@ configurations {
         // logBack 충돌 방지
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
+    querydsl {
+        extendsFrom compileClasspath
+    }
 }
 
 repositories {
@@ -23,38 +38,59 @@ repositories {
 }
 
 dependencies {
-    // web
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    // Spring Security
-    implementation "org.springframework.boot:spring-boot-starter-security"
-    implementation "org.springframework.security:spring-security-test"
-    // jdbc
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     // log4j2
     implementation 'org.springframework.boot:spring-boot-starter-log4j2'
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+
     // jpa
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
     // springdoc
-    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.7.0'
+
+    // querydsl
+    implementation group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion
+    annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: queryDslVersion
+
+    // postgresql
+    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
+
     // lombok
     compileOnly 'org.projectlombok:lombok'
-    // postgresql
-    runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-ext.profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
-
-sourceSets {
-    main {
-        resources {
-            srcDirs "src/main/resources-env/${profile}"
-        }
-    }
+    testImplementation "org.springframework.security:spring-security-test"
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+clean {
+    delete file('src/main/generated')
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs resourcesDir
+        }
+        java {
+            srcDirs querydslDir
+        }
+    }
+}
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }
