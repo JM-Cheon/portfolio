@@ -1,7 +1,6 @@
-package com.jm.portfolio.domain.admin.application.impl;
+package com.jm.portfolio.domain.admin.service;
 
-import com.jm.portfolio.domain.admin.application.UserManageService;
-import com.jm.portfolio.domain.users.repository.UserRepository;
+import com.jm.portfolio.domain.users.dao.UserRepository;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
@@ -21,11 +20,10 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserManageServiceImpl implements UserManageService {
+public class UserManageService {
 
     private final UserRepository userRepository;
 
-    @Override
     public PagingResponse getUserList(Criteria criteria) {
         int index = criteria.getPageNo() - 1;
         int count = criteria.getAmount();

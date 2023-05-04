@@ -1,6 +1,6 @@
-package com.jm.portfolio.domain.admin.api;
+package com.jm.portfolio.domain.admin.controller;
 
-import com.jm.portfolio.domain.admin.application.UserManageService;
+import com.jm.portfolio.domain.admin.service.UserManageService;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/v1/admin/user")
 @RequiredArgsConstructor
-public class UserManagementApi {
+public class UserManageController {
 
     private final UserManageService userManageService;
 

@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.users.repository;
+package com.jm.portfolio.domain.users.dao;
 
 import com.jm.portfolio.domain.users.domain.Role;
 import com.jm.portfolio.domain.users.domain.RolePK;

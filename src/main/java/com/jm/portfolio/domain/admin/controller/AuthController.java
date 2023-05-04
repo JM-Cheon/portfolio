@@ -1,6 +1,6 @@
-package com.jm.portfolio.domain.admin.api;
+package com.jm.portfolio.domain.admin.controller;
 
-import com.jm.portfolio.domain.admin.application.AuthService;
+import com.jm.portfolio.domain.admin.service.AuthService;
 import com.jm.portfolio.domain.admin.dto.request.AuthSaveRequest;
 import com.jm.portfolio.global.common.paging.dto.Criteria;
 import com.jm.portfolio.global.common.response.StatusResponse;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/v1/admin/auth")
 @RequiredArgsConstructor
-public class AuthApi {
+public class AuthController {
 
     private final AuthService authService;
 

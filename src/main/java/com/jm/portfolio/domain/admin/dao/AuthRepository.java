@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.admin.repository;
+package com.jm.portfolio.domain.admin.dao;
 
 import com.jm.portfolio.domain.admin.domain.Authority;
 import org.springframework.data.domain.Page;

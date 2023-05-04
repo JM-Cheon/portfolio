@@ -1,7 +1,6 @@
-package com.jm.portfolio.domain.admin.application.impl;
+package com.jm.portfolio.domain.admin.service;
 
-import com.jm.portfolio.domain.admin.application.AuthService;
-import com.jm.portfolio.domain.admin.repository.AuthRepository;
+import com.jm.portfolio.domain.admin.dao.AuthRepository;
 import com.jm.portfolio.domain.admin.domain.Authority;
 import com.jm.portfolio.domain.admin.dto.request.AuthSaveRequest;
 import com.jm.portfolio.domain.admin.dto.response.AuthResponse;
@@ -22,16 +21,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthService {
 
     private final AuthRepository authRepository;
 
-    @Override
     public void saveAuth(AuthSaveRequest newAuth) {
         authRepository.save(newAuth.toEntity());
     }
 
-    @Override
     public PagingResponse getAuthList(Criteria criteria) {
 
         int index = criteria.getPageNo() - 1;
