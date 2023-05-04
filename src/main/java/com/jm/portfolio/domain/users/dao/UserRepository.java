@@ -11,10 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, Long> {
+public interface UserRepository extends JpaRepository<Users, Long>, UserRepositoryCustom {
 
-    @Query("SELECT MAX(u.idx) FROM Users u")
-    int maxUserIdx();
     Page<Users> findByEmailContains(Pageable paging, String email);
     Page<Users> findByNicknameContains(Pageable paging, String nickname);
     Page<Users> findByCreatedIpContains(Pageable paging, String createdIp);

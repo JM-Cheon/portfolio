@@ -36,7 +36,7 @@ public class EmailSignUpServiceImpl implements SignUpService {
         user.hashPassword(passwordEncoder);
         userRepository.save(user);
 
-        int maxIdx = userRepository.maxUserIdx();
+        long maxIdx = userRepository.maxUserIdx();
         Role role = new Role(newUser.getCreatedIp(), newUser.getLastUpdatedIp(), maxIdx, "USER");
         roleRepository.save(role);
 
