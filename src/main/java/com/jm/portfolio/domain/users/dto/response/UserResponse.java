@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Schema(description = "회원 정보 DTO")
 @Getter
 @ToString
+@NoArgsConstructor
 public class UserResponse extends BaseResponse {
     @Schema(description = "아메일")
     private Email email;

@@ -10,8 +10,8 @@ spring:
     properties:
       use_sql_comments: true
       hibernate:
+        show-sql: true
         format_sql: true
-    show-sql: true
     open-in-view: false
 
 # log

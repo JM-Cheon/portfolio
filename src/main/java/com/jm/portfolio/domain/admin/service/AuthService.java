@@ -4,9 +4,9 @@ import com.jm.portfolio.domain.admin.dao.AuthRepository;
 import com.jm.portfolio.domain.admin.domain.Authority;
 import com.jm.portfolio.domain.admin.dto.request.AuthSaveRequest;
 import com.jm.portfolio.domain.admin.dto.response.AuthResponse;
-import com.jm.portfolio.global.common.paging.dto.Criteria;
-import com.jm.portfolio.global.common.paging.dto.PagingDTO;
-import com.jm.portfolio.global.common.paging.dto.response.PagingResponse;
+import com.jm.portfolio.global.common.paging.SearchCondition;
+import com.jm.portfolio.global.common.paging.PagingDTO;
+import com.jm.portfolio.global.common.paging.PagingResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,16 +29,16 @@ public class AuthService {
         authRepository.save(newAuth.toEntity());
     }
 
-    public PagingResponse getAuthList(Criteria criteria) {
+    public PagingResponse getAuthList(SearchCondition searchCondition) {
 
-        int index = criteria.getPageNo() - 1;
-        int count = criteria.getAmount();
-        String sortBy = criteria.getSortBy();
-        String orderBy = criteria.getOrderBy();
-        String searchBy = criteria.getSearchBy();
-        String searchValue = criteria.getSearchValue();
-        LocalDateTime startDate = criteria.getStartDate();
-        LocalDateTime endDate = criteria.getEndDate();
+        int index = searchCondition.getPageNo() - 1;
+        int count = searchCondition.getAmount();
+        String sortBy = searchCondition.getSortBy();
+        String orderBy = searchCondition.getOrderBy();
+        String searchBy = searchCondition.getSearchBy();
+        String searchValue = searchCondition.getSearchValue();
+        LocalDateTime startDate = searchCondition.getStartDate();
+        LocalDateTime endDate = searchCondition.getEndDate();
 
         Pageable paging;
         if(orderBy.equals("asc")) {
@@ -93,7 +93,7 @@ public class AuthService {
 
         PagingResponse response = new PagingResponse();
         response.setData(result.getContent().stream().map(AuthResponse::new).collect(Collectors.toList()));
-        response.setPageInfo(new PagingDTO(criteria, authRepository.countAuthCode()));
+        response.setPageInfo(new PagingDTO(searchCondition, authRepository.countAuthCode()));
 
         return response;
     }

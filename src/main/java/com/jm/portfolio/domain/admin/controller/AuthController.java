@@ -2,7 +2,7 @@ package com.jm.portfolio.domain.admin.controller;
 
 import com.jm.portfolio.domain.admin.service.AuthService;
 import com.jm.portfolio.domain.admin.dto.request.AuthSaveRequest;
-import com.jm.portfolio.global.common.paging.dto.Criteria;
+import com.jm.portfolio.global.common.paging.SearchCondition;
 import com.jm.portfolio.global.common.response.StatusResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +40,8 @@ public class AuthController {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
     ) {
-        Criteria criteria = new Criteria(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
+        SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", authService.getAuthList(criteria)));
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", authService.getAuthList(searchCondition)));
     }
 }

@@ -1,7 +1,7 @@
 package com.jm.portfolio.domain.admin.controller;
 
 import com.jm.portfolio.domain.admin.service.UserManageService;
-import com.jm.portfolio.global.common.paging.dto.Criteria;
+import com.jm.portfolio.global.common.paging.SearchCondition;
 import com.jm.portfolio.global.common.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,19 +26,34 @@ public class UserManageController {
 
     private final UserManageService userManageService;
 
-    @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
-    @GetMapping(value = "/list")
-    public ResponseEntity<StatusResponse> getUserList (
-            @RequestParam(required = false, defaultValue = "1") String offset,
-            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
-            @RequestParam(required = false, defaultValue = "desc") String orderBy,
-            @RequestParam(required = false, defaultValue = "nickname") String searchBy,
-            @RequestParam(required = false) String searchValue,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
-    ) {
-        Criteria criteria = new Criteria(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
+//    @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
+//    @GetMapping(value = "/list")
+//    public ResponseEntity<StatusResponse> getUserList (
+//            @RequestParam(required = false, defaultValue = "1") String offset,
+//            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
+//            @RequestParam(required = false, defaultValue = "desc") String orderBy,
+//            @RequestParam(required = false, defaultValue = "nickname") String searchBy,
+//            @RequestParam(required = false) String searchValue,
+//            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+//            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
+//    ) {
+//        Criteria criteria = new Criteria(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
+//
+//        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(criteria)));
+//    }
+@Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
+@GetMapping(value = "/list")
+public ResponseEntity<StatusResponse> getUserList (
+        @RequestParam(required = false, defaultValue = "1") String offset,
+        @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
+        @RequestParam(required = false, defaultValue = "desc") String orderBy,
+        @RequestParam(required = false, defaultValue = "nickname") String searchBy,
+        @RequestParam(required = false) String searchValue,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
+) {
+    SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(criteria)));
-    }
+    return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(searchCondition)));
+}
 }

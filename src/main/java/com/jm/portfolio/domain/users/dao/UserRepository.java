@@ -1,11 +1,9 @@
 package com.jm.portfolio.domain.users.dao;
 
-import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -30,7 +28,4 @@ public interface UserRepository extends JpaRepository<Users, Long>, UserReposito
     Page<Users> findByLastUpdatedAtBetween(Pageable paging, LocalDateTime startDate, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtBefore(Pageable paging, LocalDateTime endDate);
     Page<Users> findByLastUpdatedAtAfter(Pageable paging, LocalDateTime startDate);
-    boolean existsByEmail(Email email);
-    @Query("SELECT u FROM Users u WHERE u.email = ?1")
-    Users findByEmail(Email email);
 }
