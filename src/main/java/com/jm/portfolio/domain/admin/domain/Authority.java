@@ -4,7 +4,6 @@ import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "authority")

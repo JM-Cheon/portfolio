@@ -22,6 +22,10 @@ public class Role extends BaseDomain {
     @Column(name = "auth_code", updatable = false, nullable = false)
     private String authCode;
 
+    @OneToOne
+    @JoinColumn(name = "user_idx", insertable = false, updatable = false)
+    private Users users;
+
     @ManyToOne
     @JoinColumn(name = "auth_code", insertable = false, updatable = false)
     private Authority authority;
