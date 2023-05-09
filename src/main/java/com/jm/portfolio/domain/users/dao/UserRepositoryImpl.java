@@ -4,13 +4,15 @@ import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.global.common.paging.SearchCondition;
-import com.querydsl.core.QueryResults;
+import com.jm.portfolio.global.error.exception.InvalidValueException;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +50,143 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
             }
         }
         return new OrderSpecifier(Order.DESC, users.email);
+    }
+
+    private BooleanExpression containsEmail(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("email")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.email.value.contains(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression containsNickname(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("nickname")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.nickname.contains(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression containsCreatedIp(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("createdIp")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.createdIp.contains(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression containsLastUpdatedIp(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("lastUpdatedIp")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.lastUpdatedIp.contains(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression containsWithdrawIp(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("withdrawIp")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.withdrawIp.contains(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression isWithdrawYn(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("isWithdraw")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.isWithdraw.eq(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression isExpiredYn(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("isExpired")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.isExpired.eq(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression isDisabledYn(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("isDisabled")) {
+            return null;
+        }
+        if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
+            return null;
+        }
+        return users.isDisabled.eq(searchCondition.getSearchValue());
+    }
+
+    private BooleanExpression searchCreatedAt(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("createdAt")) {
+            return null;
+        }
+        if(searchCondition.getStartDate() != null && searchCondition.getEndDate() != null) {
+            if(searchCondition.getStartDate().isAfter(searchCondition.getEndDate())) {
+                throw new InvalidValueException(searchCondition.getStartDate().toString() +  " || " + searchCondition.getEndDate().toString());
+            }
+            return users.createdAt.between(searchCondition.getStartDate(), searchCondition.getEndDate());
+        }
+        if(searchCondition.getStartDate() != null) {
+            return users.createdAt.goe(searchCondition.getStartDate());
+        }
+        if(searchCondition.getEndDate() != null) {
+            return users.createdAt.loe(searchCondition.getEndDate());
+        }
+        return null;
+    }
+
+    private BooleanExpression searchLastUpdatedAt(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("lastUpdatedAt")) {
+            return null;
+        }
+        if(searchCondition.getStartDate() != null && searchCondition.getEndDate() != null) {
+            if(searchCondition.getStartDate().isAfter(searchCondition.getEndDate())) {
+                throw new InvalidValueException(searchCondition.getStartDate().toString() +  " || " + searchCondition.getEndDate().toString());
+            }
+            return users.lastUpdatedAt.between(searchCondition.getStartDate(), searchCondition.getEndDate());
+        }
+        if(searchCondition.getStartDate() != null) {
+            return users.lastUpdatedAt.goe(searchCondition.getStartDate());
+        }
+        if(searchCondition.getEndDate() != null) {
+            return users.lastUpdatedAt.loe(searchCondition.getEndDate());
+        }
+        return null;
+    }
+
+    private BooleanExpression searchWithdrawAt(SearchCondition searchCondition) {
+        if(!searchCondition.getSearchBy().equals("withdrawAt")) {
+            return null;
+        }
+        if(searchCondition.getStartDate() != null && searchCondition.getEndDate() != null) {
+            if(searchCondition.getStartDate().isAfter(searchCondition.getEndDate())) {
+                throw new InvalidValueException(searchCondition.getStartDate().toString() +  " || " + searchCondition.getEndDate().toString());
+            }
+            return users.withdrawAt.between(searchCondition.getStartDate(), searchCondition.getEndDate());
+        }
+        if(searchCondition.getStartDate() != null) {
+            return users.withdrawAt.goe(searchCondition.getStartDate());
+        }
+        if(searchCondition.getEndDate() != null) {
+            return users.withdrawAt.loe(searchCondition.getEndDate());
+        }
+        return null;
     }
 
     @Override
@@ -109,7 +248,19 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                         users.isDisabled,
                         users.isExpired))
                 .from(users)
-//                .where(searchEq(userSearch))
+                .where(
+                        containsEmail(searchCondition),
+                        containsNickname(searchCondition),
+                        containsCreatedIp(searchCondition),
+                        containsLastUpdatedIp(searchCondition),
+                        containsWithdrawIp(searchCondition),
+                        isWithdrawYn(searchCondition),
+                        isExpiredYn(searchCondition),
+                        isDisabledYn(searchCondition),
+                        searchCreatedAt(searchCondition),
+                        searchLastUpdatedAt(searchCondition),
+                        searchWithdrawAt(searchCondition)
+                )
                 .offset(page.getOffset())
                 .limit(page.getPageSize())
                 .orderBy(userSort(page))

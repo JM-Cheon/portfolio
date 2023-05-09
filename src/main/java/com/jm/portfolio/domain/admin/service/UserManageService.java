@@ -29,10 +29,6 @@ public class UserManageService {
         int count = searchCondition.getAmount();
         String sortBy = searchCondition.getSortBy();
         String orderBy = searchCondition.getOrderBy();
-//        String searchBy = searchCondition.getSearchBy();
-//        String searchValue = searchCondition.getSearchValue();
-//        LocalDateTime startDate = searchCondition.getStartDate();
-//        LocalDateTime endDate = searchCondition.getEndDate();
 
         Pageable page;
         if(orderBy.equals("asc")) {

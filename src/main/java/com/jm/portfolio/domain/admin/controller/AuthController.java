@@ -31,17 +31,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<StatusResponse> getAuthList (
-            @RequestParam(defaultValue = "1") String offset,
-            @RequestParam(defaultValue = "authName") String sortBy,
-            @RequestParam(required = false, defaultValue = "asc") String orderBy,
-            @RequestParam(required = false, defaultValue = "authName") String searchBy,
-            @RequestParam(required = false) String searchValue,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
-    ) {
-        SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
-
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", authService.getAuthList(searchCondition)));
+    public ResponseEntity<StatusResponse> getAuthList () {
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", authService.getAuthList()));
     }
 }
