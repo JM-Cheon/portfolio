@@ -34,8 +34,6 @@ public abstract class BaseDomain {
     private String lastUpdatedIp;
 
     public BaseDomain(String createdIp, String lastUpdatedIp) {
-//        this.createdAt = createdAt;
-//        this.lastUpdatedAt = lastUpdatedAt;
         this.createdIp = createdIp;
         this.lastUpdatedIp = lastUpdatedIp;
     }

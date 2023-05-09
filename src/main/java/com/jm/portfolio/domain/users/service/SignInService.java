@@ -1,5 +1,7 @@
 package com.jm.portfolio.domain.users.service;
 
+import com.jm.portfolio.domain.admin.dao.SignInLogRepository;
+import com.jm.portfolio.domain.admin.domain.SignInLog;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.request.SigninRequest;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class SignInService {
 
     private final UserRepository userRepository;
+    private final SignInLogRepository signInLogRepository;
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse signIn(SigninRequest user) {
@@ -24,6 +27,10 @@ public class SignInService {
         if(userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword())) {
             throw new SigninFailedException();
         }
+
+        SignInLog signInLog = new SignInLog(userInfo.getEmail(), user.getSignInIp());
+        signInLogRepository.save(signInLog);
+
         return new UserResponse(userInfo);
     }
 }

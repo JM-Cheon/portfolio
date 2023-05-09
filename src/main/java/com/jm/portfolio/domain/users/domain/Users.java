@@ -53,7 +53,7 @@ public class Users extends BaseDomain {
     }
 
     @Builder
-    public Users (String createdIp, String lastUpdatedIp, Email email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, BaseDomain baseDomain) {
+    public Users (String createdIp, String lastUpdatedIp, Email email, String password, String nickname, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired) {
         super(createdIp, lastUpdatedIp);
         this.email = email;
         this.password = password;

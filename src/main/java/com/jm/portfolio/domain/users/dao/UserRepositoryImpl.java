@@ -198,6 +198,14 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     }
 
     @Override
+    public int countUser() {
+        return Math.toIntExact(jpaQueryFactory
+                .select(users.count())
+                .from(users)
+                .fetchFirst());
+    }
+
+    @Override
     public Users findByEmail(Email email) {
         return jpaQueryFactory
                 .select(users)
@@ -266,6 +274,6 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .orderBy(userSort(page))
                 .fetch();
 
-        return new PageImpl<>(content, page, maxUserIdx());
+        return new PageImpl<>(content, page, countUser());
     }
 }

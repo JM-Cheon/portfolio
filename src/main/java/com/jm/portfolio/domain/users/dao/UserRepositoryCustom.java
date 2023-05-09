@@ -11,6 +11,8 @@ public interface UserRepositoryCustom {
 
     Long maxUserIdx();
 
+    int countUser();
+
     Users findByEmail(Email email);
 
     boolean existsByEmail(Email email);

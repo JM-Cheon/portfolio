@@ -20,25 +20,41 @@ import java.time.LocalDateTime;
 @Slf4j
 @Tag(name="권한", description = "권한 관련 API")
 @RestController
-@RequestMapping("/api/v1/admin/user")
+@RequestMapping("/api/v1/admin")
 @RequiredArgsConstructor
 public class UserManageController {
 
     private final UserManageService userManageService;
 
-@Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
-@GetMapping(value = "/list")
-public ResponseEntity<StatusResponse> getUserList (
-        @RequestParam(required = false, defaultValue = "1") String offset,
-        @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
-        @RequestParam(required = false, defaultValue = "desc") String orderBy,
-        @RequestParam(required = false, defaultValue = "nickname") String searchBy,
-        @RequestParam(required = false) String searchValue,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
-) {
-    SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
+    @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
+    @GetMapping(value = "/user/list")
+    public ResponseEntity<StatusResponse> getUserList (
+            @RequestParam(required = false, defaultValue = "1") String offset,
+            @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
+            @RequestParam(required = false, defaultValue = "desc") String orderBy,
+            @RequestParam(required = false, defaultValue = "nickname") String searchBy,
+            @RequestParam(required = false) String searchValue,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
+    ) {
+        SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
-    return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(searchCondition)));
-}
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(searchCondition)));
+    }
+
+    @Operation(summary = "회원 로그인 이력 조회", description = "회원 로그인 이력 조회 메소드")
+    @GetMapping(value = "/sign-in/list")
+    public ResponseEntity<StatusResponse> getSingInLog (
+            @RequestParam(required = false, defaultValue = "1") String offset,
+            @RequestParam(required = false, defaultValue = "idx") String sortBy,
+            @RequestParam(required = false, defaultValue = "desc") String orderBy,
+            @RequestParam(required = false, defaultValue = "email") String searchBy,
+            @RequestParam(required = false) String searchValue,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime endDate
+    ) {
+        SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
+
+        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getSignInLog(searchCondition)));
+    }
 }
