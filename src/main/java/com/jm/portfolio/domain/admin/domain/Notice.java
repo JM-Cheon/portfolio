@@ -1,10 +1,12 @@
 package com.jm.portfolio.domain.admin.domain;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "notice")
@@ -18,8 +20,8 @@ public class Notice extends BaseDomain {
     @Column(name = "idx", updatable = false)
     private Long idx;
 
-    @Column(name = "user_idx", updatable = false, nullable = false)
-    private long userIdx;
+    @Column(name = "nickname", updatable = false, nullable = false)
+    private String nickname;
 
     @Column(name = "title", updatable = false)
     private String title;
@@ -28,14 +30,19 @@ public class Notice extends BaseDomain {
     @Column(name = "content", updatable = false)
     private String content;
 
+    @Column(name = "img", updatable = false)
+    private String img;
+
     @ManyToOne
     @JoinColumn(name = "user_idx", insertable = false, updatable = false)
     private Users user;
 
     @Builder
-    public Notice(long userIdx, String title, String content) {
-        this.userIdx = userIdx;
+    public Notice(String createdIp, String lastUpdatedIp, String nickname, String title, String content, String img) {
+        super(createdIp, lastUpdatedIp);
+        this.nickname = nickname;
         this.title = title;
         this.content = content;
+        this.img = img;
     }
 }

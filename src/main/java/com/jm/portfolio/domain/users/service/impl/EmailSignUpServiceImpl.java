@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.service.impl;
 
+import com.jm.portfolio.domain.model.AuthEnum;
 import com.jm.portfolio.domain.users.dao.RoleRepository;
 import com.jm.portfolio.domain.users.domain.Role;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
@@ -37,7 +38,7 @@ public class EmailSignUpServiceImpl implements SignUpService {
         userRepository.save(user);
 
         long maxIdx = userRepository.maxUserIdx();
-        Role role = new Role(newUser.getCreatedIp(), newUser.getLastUpdatedIp(), maxIdx, "USER");
+        Role role = new Role(newUser.getCreatedIp(), newUser.getLastUpdatedIp(), maxIdx, AuthEnum.USER);
         roleRepository.save(role);
 
         return new UserResponse(user);

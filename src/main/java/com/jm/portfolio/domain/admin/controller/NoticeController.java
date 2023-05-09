@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class NoticeController {
 
-    @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
+    @Operation(summary = "공지 사항 등록", description = "공지 사항 등록 메소드")
     @PostMapping(value = {"/", ""})
     public ResponseEntity<StatusResponse> createNotice() {
         return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success"));
