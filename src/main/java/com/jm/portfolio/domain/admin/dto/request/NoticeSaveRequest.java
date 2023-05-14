@@ -14,7 +14,7 @@ public class NoticeSaveRequest extends BaseRequest {
     private String title;
     private String content;
     private String img;
-    
+
 
     public Notice toEntity() {
         return Notice.builder()
