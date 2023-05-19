@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.admin.controller;
+package com.jm.portfolio.domain.notice.controller;
 
 import com.jm.portfolio.global.common.response.StatusResponse;
 import io.swagger.v3.oas.annotations.Operation;

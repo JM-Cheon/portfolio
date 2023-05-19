@@ -192,7 +192,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     @Override
     public Long maxUserIdx() {
         return jpaQueryFactory
-                .select(users.idx.max())
+                .select(users.userIdx.max())
                 .from(users)
                 .fetchOne();
     }
@@ -254,7 +254,8 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                         users.withdrawIp,
                         users.isWithdraw,
                         users.isDisabled,
-                        users.isExpired))
+                        users.isExpired,
+                        users.userRole))
                 .from(users)
                 .where(
                         containsEmail(searchCondition),

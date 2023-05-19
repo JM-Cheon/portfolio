@@ -1,8 +1,8 @@
 package com.jm.portfolio.domain.users.service.impl;
 
-import com.jm.portfolio.domain.model.AuthEnum;
-import com.jm.portfolio.domain.users.dao.RoleRepository;
-import com.jm.portfolio.domain.users.domain.Role;
+import com.jm.portfolio.domain.authority.dao.UserRoleRepository;
+import com.jm.portfolio.domain.model.AuthorityEnum;
+import com.jm.portfolio.domain.authority.domain.UserRole;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.service.SignUpService;
 import com.jm.portfolio.domain.users.domain.Users;
@@ -22,7 +22,7 @@ import javax.transaction.Transactional;
 public class EmailSignUpServiceImpl implements SignUpService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
+    private final UserRoleRepository userRoleRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -38,8 +38,8 @@ public class EmailSignUpServiceImpl implements SignUpService {
         userRepository.save(user);
 
         long maxIdx = userRepository.maxUserIdx();
-        Role role = new Role(newUser.getCreatedIp(), newUser.getLastUpdatedIp(), maxIdx, AuthEnum.USER);
-        roleRepository.save(role);
+        UserRole userRole = new UserRole(newUser.getCreatedIp(), newUser.getLastUpdatedIp(), maxIdx, AuthorityEnum.USER.getAuth());
+        userRoleRepository.save(userRole);
 
         return new UserResponse(user);
     }
