@@ -16,7 +16,6 @@ import org.springframework.context.annotation.ComponentScan;
  * 9. Lombok
  * 10. Postgresql
  */
-// TODO: QueryDSL, Jwt 적용하기
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.jm.portfolio"})
 public class PortfolioApplication {

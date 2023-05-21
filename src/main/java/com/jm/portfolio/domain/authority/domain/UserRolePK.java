@@ -12,5 +12,5 @@ import java.io.Serializable;
 public class UserRolePK implements Serializable {
 
     private Long userIdx;
-    private AuthorityEnum authorityCode;
+    private String authorityCode;
 }

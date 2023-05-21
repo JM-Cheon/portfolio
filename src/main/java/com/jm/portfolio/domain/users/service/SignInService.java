@@ -7,6 +7,8 @@ import com.jm.portfolio.domain.users.dto.request.SigninRequest;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.domain.users.exception.SigninFailedException;
 import com.jm.portfolio.domain.users.dao.UserRepository;
+import com.jm.portfolio.global.jwt.TokenProvider;
+import com.jm.portfolio.global.jwt.response.TokenResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,8 +22,9 @@ public class SignInService {
     private final UserRepository userRepository;
     private final SignInLogRepository signInLogRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
 
-    public UserResponse signIn(SigninRequest user) {
+    public TokenResponse signIn(SigninRequest user) {
         Users getUser = user.toEntity();
         Users userInfo = userRepository.findByEmail(getUser.getEmail());
         if(userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword())) {
@@ -31,6 +34,6 @@ public class SignInService {
         SignInLog signInLog = new SignInLog(userInfo.getEmail(), user.getSignInIp());
         signInLogRepository.save(signInLog);
 
-        return new UserResponse(userInfo);
+        return tokenProvider.generatedToken(userInfo);
     }
 }

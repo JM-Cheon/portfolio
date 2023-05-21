@@ -34,3 +34,9 @@ springdoc:
       enabled: true
   cache:
     disabled: true
+
+# jwt
+jwt:
+  secret: yiY5qzsiOzEzHCCXpY5bqFvG3/fVwWDItXFHqPG4v/T4I73QHZygjRUeraSV8CfXjRUYUMsUeuyeVEWGdyVbwg==
+
+secret-key: 72E3FE4785758E3E469FDBA42E79B

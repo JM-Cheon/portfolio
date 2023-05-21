@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.dao;
 
+import com.jm.portfolio.domain.authority.domain.QUserRole;
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
+import static com.jm.portfolio.domain.authority.domain.QUserRole.userRole;
 import static com.jm.portfolio.domain.users.domain.QUsers.users;
 
 @Slf4j
@@ -207,10 +209,12 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
 
     @Override
     public Users findByEmail(Email email) {
+        // TODO: join
         return jpaQueryFactory
                 .select(users)
                 .from(users)
                 .where(users.email.eq(email))
+                .join(userRole)
                 .fetchOne();
 
         // entity가 아닌 dto로 조회

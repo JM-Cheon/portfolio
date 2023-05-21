@@ -6,6 +6,8 @@ buildscript {
         // queryDsl
         queryDslVersion = '5.0.0'
         querydslDir = "$buildDir/generated/querydsl"
+        // jwt
+        jwtVersion = '0.11.5'
     }
 }
 
@@ -50,6 +52,11 @@ dependencies {
 
     // springdoc
     implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.7.0'
+
+    // jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: jwtVersion
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: jwtVersion
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: jwtVersion
 
     // querydsl
     implementation group: 'com.querydsl', name: 'querydsl-jpa', version: queryDslVersion

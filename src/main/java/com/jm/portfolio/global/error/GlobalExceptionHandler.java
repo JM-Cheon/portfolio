@@ -4,6 +4,7 @@ import java.nio.file.AccessDeniedException;
 
 import com.jm.portfolio.global.error.exception.BusinessException;
 import com.jm.portfolio.global.error.exception.ErrorCode;
+import com.jm.portfolio.global.jwt.exception.TokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +71,13 @@ public class GlobalExceptionHandler {
         log.error("handleAccessDeniedException", e);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.HANDLE_ACCESS_DENIED);
         return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
+    }
+
+    @ExceptionHandler(TokenException.class)
+    protected ResponseEntity<ErrorResponse> handleTokenException(TokenException e) {
+        log.error("handleTokenException", e);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.TOKEN_EXCEPTION);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.TOKEN_EXCEPTION.getStatus()));
     }
 
     @ExceptionHandler(BusinessException.class)

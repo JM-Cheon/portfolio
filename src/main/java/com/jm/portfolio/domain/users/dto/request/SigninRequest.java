@@ -2,7 +2,6 @@ package com.jm.portfolio.domain.users.dto.request;
 
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.global.common.base.dto.request.BaseRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
