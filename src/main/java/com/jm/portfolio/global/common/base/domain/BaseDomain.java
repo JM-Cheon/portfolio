@@ -1,15 +1,20 @@
 package com.jm.portfolio.global.common.base.domain;
 
+import com.jm.portfolio.global.util.IpUtil;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @MappedSuperclass
@@ -33,8 +38,12 @@ public abstract class BaseDomain {
     @Column(nullable = false)
     private String lastUpdatedIp;
 
-    public BaseDomain(String createdIp, String lastUpdatedIp) {
-        this.createdIp = createdIp;
-        this.lastUpdatedIp = lastUpdatedIp;
+    @PrePersist
+    public void ipSet() {
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String ip = IpUtil.getClientIp(request);
+
+        this.createdIp = ip;
+        this.lastUpdatedIp = ip;
     }
 }

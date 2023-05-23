@@ -1,12 +1,17 @@
 package com.jm.portfolio.domain.admin.domain;
 
 import com.jm.portfolio.domain.model.Email;
+import com.jm.portfolio.global.util.IpUtil;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sign_in_log")
@@ -31,6 +36,12 @@ public class SignInLog {
     @CreatedDate
     @Column(name = "sign_in_at", updatable = false)
     private LocalDateTime signInAt;
+
+    @PrePersist
+    public void ipSet() {
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        this.signInIp = IpUtil.getClientIp(request);
+    }
 
     @Builder
     public SignInLog(Email email, String signInIp) {

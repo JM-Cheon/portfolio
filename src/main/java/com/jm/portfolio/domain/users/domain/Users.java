@@ -70,8 +70,8 @@ public class Users extends BaseDomain {
     private List<UserRole> userRole;
 
     @Builder
-    public Users (String createdIp, String lastUpdatedIp, Email email, String password, String nickname, Name name, Birth birth, LocalDateTime withdrawAt, String withdrawIp, boolean isWithdraw, boolean isDisabled, boolean isExpired, List<UserRole> userRole) {
-        super(createdIp, lastUpdatedIp);
+    public Users (Email email, String password, String nickname, Name name, Birth birth, LocalDateTime withdrawAt, String withdrawIp, boolean isWithdraw, boolean isDisabled, boolean isExpired, List<UserRole> userRole) {
+        super();
         this.email = email;
         this.password = password;
         this.nickname = nickname;

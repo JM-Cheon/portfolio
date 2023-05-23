@@ -2,8 +2,6 @@ package com.jm.portfolio.domain.admin.dto.response;
 
 import com.jm.portfolio.domain.admin.domain.SignInLog;
 import com.jm.portfolio.domain.model.Email;
-import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.global.common.base.dto.response.BaseResponse;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

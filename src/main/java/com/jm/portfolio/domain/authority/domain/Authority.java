@@ -25,8 +25,8 @@ public class Authority extends BaseDomain {
     private String authorityDesc;
 
     @Builder
-    public Authority(String createdIp, String lastUpdatedIp, String authorityCode, String authorityName, String authorityDesc) {
-        super(createdIp, lastUpdatedIp);
+    public Authority(String authorityCode, String authorityName, String authorityDesc) {
+        super();
         this.authorityCode = authorityCode;
         this.authorityName = authorityName;
         this.authorityDesc = authorityDesc;

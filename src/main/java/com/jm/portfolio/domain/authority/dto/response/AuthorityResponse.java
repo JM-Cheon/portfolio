@@ -1,7 +1,6 @@
 package com.jm.portfolio.domain.authority.dto.response;
 
 import com.jm.portfolio.domain.authority.domain.Authority;
-import com.jm.portfolio.domain.model.AuthorityEnum;
 import com.jm.portfolio.global.common.base.dto.response.BaseResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

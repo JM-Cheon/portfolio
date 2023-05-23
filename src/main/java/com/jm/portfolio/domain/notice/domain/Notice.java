@@ -33,8 +33,8 @@ public class Notice extends BaseDomain {
     private Users user;
 
     @Builder
-    public Notice(String createdIp, String lastUpdatedIp, String title, String content, String img) {
-        super(createdIp, lastUpdatedIp);
+    public Notice(String title, String content, String img) {
+        super();
         this.title = title;
         this.content = content;
         this.img = img;

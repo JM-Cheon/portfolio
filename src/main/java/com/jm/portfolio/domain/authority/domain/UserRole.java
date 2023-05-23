@@ -27,8 +27,8 @@ public class UserRole extends BaseDomain {
     private Authority authority;
 
     @Builder
-    public UserRole(String createdIp, String lastUpdatedIp, Long userIdx, String authorityCode) {
-        super(createdIp, lastUpdatedIp);
+    public UserRole(Long userIdx, String authorityCode) {
+        super();
         this.userIdx = userIdx;
         this.authorityCode = authorityCode;
     }

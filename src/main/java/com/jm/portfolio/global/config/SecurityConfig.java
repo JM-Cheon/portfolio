@@ -54,15 +54,15 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/").authenticated()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // cors
-                .antMatchers("/api/v1/auth/**").permitAll()
-		    	.antMatchers("/api/v1/user/**").hasAnyRole(
-                        AuthorityEnum.GUEST.getAuth(),
-                        AuthorityEnum.USER.getAuth(),
-                        AuthorityEnum.INTERIM_ADMIN.getAuth(),
-                        AuthorityEnum.ADMIN.getAuth()
-                )
-		    	.antMatchers("/api/v1/admin/**").hasRole(AuthorityEnum.ADMIN.getAuth())
-//		    	.anyRequest().permitAll();	// security 설정 완료 후 삭제
+//                .antMatchers("/api/v1/auth/**").permitAll()
+//		    	.antMatchers("/api/v1/user/**").hasAnyRole(
+//                        AuthorityEnum.GUEST.getAuth(),
+//                        AuthorityEnum.USER.getAuth(),
+//                        AuthorityEnum.INTERIM_ADMIN.getAuth(),
+//                        AuthorityEnum.ADMIN.getAuth()
+//                )
+//		    	.antMatchers("/api/v1/admin/**").hasRole(AuthorityEnum.ADMIN.getAuth())
+		    	.anyRequest().permitAll()	// security 설정 완료 후 삭제
                 .and()
                 /* 세션 인증 방식을 쓰지 않겠다는 설정 */
                 .sessionManagement()

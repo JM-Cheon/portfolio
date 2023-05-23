@@ -1,14 +1,13 @@
 package com.jm.portfolio.domain.notice.dto.request;
 
 import com.jm.portfolio.domain.notice.domain.Notice;
-import com.jm.portfolio.global.common.base.dto.request.BaseRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public class NoticeSaveRequest extends BaseRequest {
+public class NoticeSaveRequest {
 
     private String title;
     private String content;
@@ -20,8 +19,6 @@ public class NoticeSaveRequest extends BaseRequest {
                 .title(title)
                 .content(content)
                 .img(img)
-                .createdIp(getCreatedIp())
-                .lastUpdatedIp(getLastUpdatedIp())
                 .build();
     }
 }

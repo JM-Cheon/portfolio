@@ -3,7 +3,6 @@ package com.jm.portfolio.domain.users.dto.request;
 import com.jm.portfolio.domain.model.Birth;
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.model.Name;
-import com.jm.portfolio.global.common.base.dto.request.BaseRequest;
 import com.jm.portfolio.domain.users.domain.Users;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import javax.validation.Valid;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public class SignupRequest extends BaseRequest {
+public class SignupRequest {
     @Valid
     private Email email;
     @Valid
@@ -32,8 +31,6 @@ public class SignupRequest extends BaseRequest {
                 .nickname(nickname)
                 .name(name)
                 .birth(birth)
-                .createdIp(getCreatedIp())
-                .lastUpdatedIp(getLastUpdatedIp())
                 .build();
     }
 }
