@@ -31,19 +31,30 @@ public abstract class BaseDomain {
     private LocalDateTime lastUpdatedAt;
 
     @NotEmpty
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     private String createdIp;
 
     @NotEmpty
-    @Column(nullable = false)
+    @Column
     private String lastUpdatedIp;
 
     @PrePersist
     public void ipSet() {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String ip = IpUtil.getClientIp(request);
 
-        this.createdIp = ip;
-        this.lastUpdatedIp = ip;
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        String ip = null;
+
+        if(servletRequestAttributes != null) {
+            HttpServletRequest request = servletRequestAttributes.getRequest();
+            ip = IpUtil.getClientIp(request);
+        }
+
+        this.createdIp = this.createdIp == null ? ip : this.createdIp;
+        this.lastUpdatedIp = this.lastUpdatedIp == null ? ip : this.lastUpdatedIp;
+    }
+
+    public BaseDomain (String createdIp, String lastUpdatedIp) {
+        this.createdIp = createdIp;
+        this.lastUpdatedIp = lastUpdatedIp;
     }
 }
