@@ -2,7 +2,7 @@ package com.jm.portfolio.domain.authority.controller;
 
 import com.jm.portfolio.domain.authority.dto.request.AuthoritySaveRequest;
 import com.jm.portfolio.domain.authority.service.AuthorityService;
-import com.jm.portfolio.global.common.response.StatusResponse;
+import com.jm.portfolio.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +22,13 @@ public class AuthorityController {
     private final AuthorityService authorityService;
 
     @PostMapping(value = "/save")
-    public ResponseEntity<StatusResponse> saveAuth (@RequestBody @Valid final AuthoritySaveRequest newAuth) {
+    public ResponseEntity<ApiResponse> saveAuth (@RequestBody @Valid final AuthoritySaveRequest newAuth) {
         authorityService.saveAuth(newAuth);
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.CREATED, "success"));
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.CREATED, "success"));
     }
 
     @GetMapping(value = "/list")
-    public ResponseEntity<StatusResponse> getAuthList () {
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", authorityService.getAuthList()));
+    public ResponseEntity<ApiResponse> getAuthList () {
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", authorityService.getAuthList()));
     }
 }

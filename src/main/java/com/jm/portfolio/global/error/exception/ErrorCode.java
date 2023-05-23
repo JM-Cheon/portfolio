@@ -17,9 +17,9 @@ public enum ErrorCode {
     TOKEN_EXCEPTION(401, "C007", "Token Exception"),
 
 
-    // Member
+        // Users
     EMAIL_DUPLICATION(400, "M001", "Email is Duplication"),
-    LOGIN_INPUT_INVALID(400, "M002", "Login input is invalid"),
+    LOGIN_FAILED(400, "M002", "Login failed"),
     ;
 
     private int status;

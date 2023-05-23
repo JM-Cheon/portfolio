@@ -2,7 +2,7 @@ package com.jm.portfolio.domain.admin.controller;
 
 import com.jm.portfolio.domain.admin.service.UserManageService;
 import com.jm.portfolio.global.common.paging.SearchCondition;
-import com.jm.portfolio.global.common.response.StatusResponse;
+import com.jm.portfolio.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class UserManageController {
 
     @Operation(summary = "회원 목록 조회", description = "회원 전체 목록 조회 메소드")
     @GetMapping(value = "/user/list")
-    public ResponseEntity<StatusResponse> getUserList (
+    public ResponseEntity<ApiResponse> getUserList (
             @RequestParam(required = false, defaultValue = "1") String offset,
             @RequestParam(required = false, defaultValue = "createdAt") String sortBy,
             @RequestParam(required = false, defaultValue = "desc") String orderBy,
@@ -39,12 +39,12 @@ public class UserManageController {
     ) {
         SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getUserList(searchCondition)));
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", userManageService.getUserList(searchCondition)));
     }
 
     @Operation(summary = "회원 로그인 이력 조회", description = "회원 로그인 이력 조회 메소드")
     @GetMapping(value = "/sign-in/list")
-    public ResponseEntity<StatusResponse> getSingInLog (
+    public ResponseEntity<ApiResponse> getSingInLog (
             @RequestParam(required = false, defaultValue = "1") String offset,
             @RequestParam(required = false, defaultValue = "idx") String sortBy,
             @RequestParam(required = false, defaultValue = "desc") String orderBy,
@@ -55,6 +55,6 @@ public class UserManageController {
     ) {
         SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success", userManageService.getSignInLog(searchCondition)));
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", userManageService.getSignInLog(searchCondition)));
     }
 }

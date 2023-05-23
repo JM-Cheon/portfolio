@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.common.response;
+package com.jm.portfolio.global.common;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -7,17 +7,17 @@ import org.springframework.http.HttpStatus;
 @Setter
 @ToString
 @NoArgsConstructor
-public class StatusResponse {
+public class ApiResponse {
     private int status;
     private String message;
     private Object data;
 
-    public StatusResponse(HttpStatus status, String message) {
+    public ApiResponse(HttpStatus status, String message) {
         this.status = status.value();
         this.message = message;
     }
 
-    public StatusResponse(HttpStatus status, String message, Object data) {
+    public ApiResponse(HttpStatus status, String message, Object data) {
         this.status = status.value();
         this.message = message;
         this.data = data;

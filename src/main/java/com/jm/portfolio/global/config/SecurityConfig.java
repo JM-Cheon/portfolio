@@ -1,6 +1,8 @@
 package com.jm.portfolio.global.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jm.portfolio.domain.model.AuthorityEnum;
+import com.jm.portfolio.global.jwt.JwtAccessDeniedHandler;
+import com.jm.portfolio.global.jwt.JwtAuthenticationEntryPoint;
 import com.jm.portfolio.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,10 +25,9 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final ObjectMapper objectMapper;
     private final TokenProvider tokenProvider;
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -47,18 +48,21 @@ public class SecurityConfig {
         http.csrf().disable()
                 .exceptionHandling()
                 /* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
-//                .authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
-//                .accessDeniedHandler(jwtAccessDeniedHandler)			// 필요한 권한 없이 접근 시(403)
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
+                .accessDeniedHandler(jwtAccessDeniedHandler)			// 필요한 권한 없이 접근 시(403)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").authenticated()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/api/v1/user/signin").permitAll()
-                .antMatchers("/api/v1//user/signup").permitAll()
-                .antMatchers("/auth/**").permitAll()
-//		    	.antMatchers("/api/v1/user/**").hasAnyRole("USER", "ADMIN")
-//		    	.antMatchers("/api/v1/admin/**").hasRole("ADMIN")
-//		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // cors
+                .antMatchers("/api/v1/auth/**").permitAll()
+		    	.antMatchers("/api/v1/user/**").hasAnyRole(
+                        AuthorityEnum.GUEST.getAuth(),
+                        AuthorityEnum.USER.getAuth(),
+                        AuthorityEnum.INTERIM_ADMIN.getAuth(),
+                        AuthorityEnum.ADMIN.getAuth()
+                )
+		    	.antMatchers("/api/v1/admin/**").hasRole(AuthorityEnum.ADMIN.getAuth())
+//		    	.anyRequest().permitAll();	// security 설정 완료 후 삭제
                 .and()
                 /* 세션 인증 방식을 쓰지 않겠다는 설정 */
                 .sessionManagement()
@@ -66,7 +70,7 @@ public class SecurityConfig {
                 .and()
                 .cors()
                 .and()
-//                /* jwt 토큰 방식을 쓰겠다는 설정 */
+                /* jwt 토큰 방식을 쓰겠다는 설정 */
                 .apply(new JwtSecurityConfig(tokenProvider));
 
         return http.build();

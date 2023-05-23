@@ -56,28 +56,21 @@ public class Users extends BaseDomain {
     @Column(name = "withdraw_ip")
     private String withdrawIp;
 
-    @Column(name = "is_withdraw", columnDefinition = "varchar(1) CHECK (is_withdraw IN ('Y', 'N'))")
-    private String isWithdraw;
+    @Column(name = "is_withdraw", columnDefinition = "boolean default false")
+    private boolean isWithdraw = false;
 
-    @Column(name = "is_disabled", columnDefinition = "varchar(1) CHECK (is_disabled IN ('Y', 'N'))")
-    private String isDisabled;
+    @Column(name = "is_disabled", columnDefinition = "boolean default true")
+    private boolean isDisabled = true;
 
-    @Column(name = "is_expired", columnDefinition = "varchar(1) CHECK (is_expired IN ('Y', 'N'))")
-    private String isExpired;
+    @Column(name = "is_expired", columnDefinition = "boolean default false")
+    private boolean isExpired = false;
 
     @OneToMany
     @JoinColumn(name = "user_idx")
     private List<UserRole> userRole;
 
-    @PrePersist
-    public void prePersist() {
-        this.isWithdraw = this.isWithdraw == null ? "N" : this.isWithdraw;
-        this.isDisabled = this.isDisabled == null ? "N" : this.isDisabled;
-        this.isExpired = this.isExpired == null ? "N" : this.isExpired;
-    }
-
     @Builder
-    public Users (String createdIp, String lastUpdatedIp, Email email, String password, String nickname, Name name, Birth birth, LocalDateTime withdrawAt, String withdrawIp, String isWithdraw, String isDisabled, String isExpired, List<UserRole> userRole) {
+    public Users (String createdIp, String lastUpdatedIp, Email email, String password, String nickname, Name name, Birth birth, LocalDateTime withdrawAt, String withdrawIp, boolean isWithdraw, boolean isDisabled, boolean isExpired, List<UserRole> userRole) {
         super(createdIp, lastUpdatedIp);
         this.email = email;
         this.password = password;

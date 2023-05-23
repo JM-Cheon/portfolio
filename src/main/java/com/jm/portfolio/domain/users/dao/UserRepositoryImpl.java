@@ -1,6 +1,5 @@
 package com.jm.portfolio.domain.users.dao;
 
-import com.jm.portfolio.domain.authority.domain.QUserRole;
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
@@ -19,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static com.jm.portfolio.domain.authority.domain.QUserRole.userRole;
@@ -111,7 +111,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
             return null;
         }
-        return users.isWithdraw.eq(searchCondition.getSearchValue());
+        boolean isTrue = false;
+        if(searchCondition.equals("true") || searchCondition.equals("Y") || searchCondition.equals("y")) {
+            isTrue = true;
+        }
+        return users.isWithdraw.eq(isTrue);
     }
 
     private BooleanExpression isExpiredYn(SearchCondition searchCondition) {
@@ -121,7 +125,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
             return null;
         }
-        return users.isExpired.eq(searchCondition.getSearchValue());
+        boolean isTrue = false;
+        if(searchCondition.equals("true") || searchCondition.equals("Y") || searchCondition.equals("y")) {
+            isTrue = true;
+        }
+        return users.isExpired.eq(isTrue);
     }
 
     private BooleanExpression isDisabledYn(SearchCondition searchCondition) {
@@ -131,7 +139,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         if(StringUtils.isEmpty(searchCondition.getSearchValue())) {
             return null;
         }
-        return users.isDisabled.eq(searchCondition.getSearchValue());
+        boolean isTrue = false;
+        if(searchCondition.equals("true") || searchCondition.equals("Y") || searchCondition.equals("y")) {
+            isTrue = true;
+        }
+        return users.isDisabled.eq(isTrue);
     }
 
     private BooleanExpression searchCreatedAt(SearchCondition searchCondition) {
@@ -208,29 +220,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     }
 
     @Override
+    @Transactional
     public Users findByEmail(Email email) {
-        // TODO: join
-        return jpaQueryFactory
-                .select(users)
-                .from(users)
-                .where(users.email.eq(email))
-                .join(userRole)
-                .fetchOne();
 
-        // entity가 아닌 dto로 조회
-//        return jpaQueryFactory
-//                .select(Projections.fields(
-//                        UserResponse.class,
-//                        Expressions.asString(email.toString()).as("email"),
-//                        users.nickname,
-//                        users.withdrawAt,
-//                        users.withdrawIp,
-//                        users.isWithdraw,
-//                        users.isDisabled,
-//                        users.isExpired))
-//                .from(users)
-//                .where(users.email.eq(email))
-//                .fetchOne();
+        return jpaQueryFactory
+                .selectFrom(users)
+                .innerJoin(users.userRole, userRole)
+                .fetchJoin()
+                .where(users.email.value.eq(email.getValue()))
+                .distinct()
+                .fetchOne();
     }
 
     @Override
@@ -238,7 +237,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
         Integer fetchOne = jpaQueryFactory
                 .selectOne()
                 .from(users)
-                .where(users.email.eq(email))
+                .where(users.email.value.eq(email.getValue()))
                 .fetchFirst();
 
         return fetchOne != null;

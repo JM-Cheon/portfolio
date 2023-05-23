@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.notice.controller;
 
-import com.jm.portfolio.global.common.response.StatusResponse;
+import com.jm.portfolio.global.common.ApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class NoticeController {
 
     @Operation(summary = "공지 사항 등록", description = "공지 사항 등록 메소드")
     @PostMapping(value = {"/", ""})
-    public ResponseEntity<StatusResponse> createNotice() {
-        return ResponseEntity.ok().body(new StatusResponse(HttpStatus.OK, "success"));
+    public ResponseEntity<ApiResponse> createNotice() {
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success"));
     }
 }

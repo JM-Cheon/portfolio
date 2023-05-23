@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class EmailSignUpServiceImpl implements SignUpService {
 
@@ -26,7 +27,6 @@ public class EmailSignUpServiceImpl implements SignUpService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    @Transactional
     public UserResponse signUp(SignupRequest newUser) {
 
         if(userRepository.existsByEmail(newUser.getEmail())) {

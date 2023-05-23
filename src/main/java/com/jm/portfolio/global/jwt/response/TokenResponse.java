@@ -10,13 +10,13 @@ import lombok.ToString;
 public class TokenResponse {
 
     private String grantType;
-    private String nickname;
+    private String email;
     private String accessToken;
     private long accessTokenExpiresIn;
 
-    public TokenResponse(final String grantType, final String nickname, final String accessToken, final long accessTokenExpiresIn) {
+    public TokenResponse(final String grantType, final String email, final String accessToken, final long accessTokenExpiresIn) {
         this.grantType = grantType;
-        this.nickname = nickname;
+        this.email = email;
         this.accessToken = accessToken;
         this.accessTokenExpiresIn = accessTokenExpiresIn;
     }

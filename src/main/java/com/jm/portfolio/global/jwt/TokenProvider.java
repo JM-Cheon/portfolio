@@ -2,7 +2,6 @@ package com.jm.portfolio.global.jwt;
 
 import com.jm.portfolio.domain.authority.domain.UserRole;
 import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.global.jwt.exception.TokenException;
 import com.jm.portfolio.global.jwt.response.TokenResponse;
 import io.jsonwebtoken.*;
@@ -44,7 +43,6 @@ public class TokenProvider {
     // Token 생성
     public TokenResponse generatedToken (Users user) {
 
-        log.debug(user.toString());
         List<String> roles = new ArrayList<>();
         for(UserRole userRole : user.getUserRole()) {
             roles.add(userRole.getAuthorityCode());
@@ -84,11 +82,11 @@ public class TokenProvider {
 
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(role -> new SimpleGrantedAuthority(role))
+                        .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, " ", userDetails.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
 
     // Token 유효성 검사
