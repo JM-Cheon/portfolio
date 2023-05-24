@@ -1,37 +1,36 @@
 package com.jm.portfolio.domain.model;
 
 import lombok.*;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"year", "month", "day"})
+@ToString(of = {"birth"})
 public class Birth {
 
     @NotEmpty
-    @Column(name = "year", length = 50)
-    private String year;
+    @Column(name = "birth")
+    private LocalDate value;
 
-    @Column(name = "month", length = 50)
-    private String month;
-
-    @NotEmpty
-    @Column(name = "day", length = 50)
-    private String day;
-
-    @Builder
-    public Birth(final String year, final String month, final String day) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
+    private Birth(final String year, final String month, final String day) {
+        String stringBirth = String.format("%s-%s-%s", year, month, day);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.value = LocalDate.parse(stringBirth, formatter);
     }
 
-    public String getBirth() {
-        return String.format("%s - %s - %s", this.year, this.month, this.day);
+    public static Birth of(final String year, final String month, final String day) {
+        return new Birth(year, month, day);
+    }
+
+    public String getStringBirth() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return value.format(formatter);
     }
 }

@@ -10,14 +10,14 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class AuthorityResponse extends BaseResponse {
-    private String autholityCode;
-    private String autholityName;
-    private String autholityDesc;
+    private String authorityCode;
+    private String authorityName;
+    private String authorityDesc;
 
     public AuthorityResponse(final Authority authority) {
         super(authority.getCreatedAt(), authority.getLastUpdatedAt(), authority.getCreatedIp(), authority.getLastUpdatedIp());
-        this.autholityCode = authority.getAuthorityCode();
-        this.autholityName = authority.getAuthorityName();
-        this.autholityDesc = authority.getAuthorityDesc();
+        this.authorityCode = authority.getAuthorityCode();
+        this.authorityName = authority.getAuthorityName();
+        this.authorityDesc = authority.getAuthorityDesc();
     }
 }

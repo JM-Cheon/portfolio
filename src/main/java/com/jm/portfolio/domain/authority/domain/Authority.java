@@ -24,6 +24,7 @@ public class Authority extends BaseDomain {
     @Column(name = "authority_desc", nullable = false)
     private String authorityDesc;
 
+    // CommandLineRunner 를 위한 생성자
     @Builder
     public Authority(String createdIp, String lastUpdatedIp, String authorityCode, String authorityName, String authorityDesc) {
         super(createdIp, lastUpdatedIp);

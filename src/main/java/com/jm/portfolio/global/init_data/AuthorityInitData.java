@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class AuthorityInitData {
 
     @Bean
-    CommandLineRunner init(AuthorityRepository authorityRepository) {
+    CommandLineRunner authorityInit(AuthorityRepository authorityRepository) {
         return args -> {
             /* Authority 기본 데이터 */
             Authority guest = Authority.builder()

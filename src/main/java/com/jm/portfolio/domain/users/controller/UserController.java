@@ -21,10 +21,13 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserRetrieveService userRetrieveService;
+//    private final UserModificateService
 
     @Operation(summary = "회원 본인의 정보", description = "회원 본인의 정보를 조회하는 메소드")
     @GetMapping(value = "/{email}")
     public ResponseEntity<ApiResponse> myInfo (@PathVariable("email") @Valid String userEmail) {
         return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", userRetrieveService.myInfo(Email.of(userEmail))));
     }
+
+
 }

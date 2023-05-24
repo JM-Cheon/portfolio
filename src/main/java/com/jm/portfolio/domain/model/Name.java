@@ -10,31 +10,42 @@ import javax.validation.constraints.NotEmpty;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"first", "middle", "last"})
+@ToString(of = {"name"})
 public class Name {
 
     @NotEmpty
-    @Column(name = "first_name", length = 50)
-    private String first;
+    @Column(name = "name", length = 50)
+    private String value;
 
-    @Column(name = "middle_name", length = 50)
-    private String middle;
-
-    @NotEmpty
-    @Column(name = "last_name", length = 50)
-    private String last;
-
-    @Builder
-    public Name(final String first, final String middle, final String last) {
-        this.first = first;
-        this.middle = StringUtils.isEmpty(middle) ? null : middle;
-        this.last = last;
+    private Name(final String name) {
+        this.value = name;
     }
 
-    public String getFullName() {
-        if (this.middle == null) {
-            return String.format("%s %s", this.first, this.last);
+    public static Name of(final String first, final String middle, final String last) {
+        if(StringUtils.isEmpty(middle)) {
+            return new Name(String.format("%s %s", last, first));
         }
-        return String.format("%s %s %s", this.first, this.middle, this.last);
+        return new Name(String.format("%s %s %s", first, middle, last));
+    }
+
+    public String getLastName() {
+        final String[] index = value.split(" ");
+        if(index.length == 2) {
+            return index[0];
+        }
+        return index[2];
+    }
+
+    public String getMiddleName() {
+        final String[] index = value.split(" ");
+        if(index.length == 2) {
+            return null;
+        }
+        return index[1];
+    }
+
+    public String getFirstName() {
+        final String[] index = value.split(" ");
+        return index[0];
     }
 }

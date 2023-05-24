@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"value"})
+@ToString(of = {"email"})
 public class Email {
 
     @javax.validation.constraints.Email
@@ -20,12 +20,12 @@ public class Email {
     @NotEmpty
     private String value;
 
-    private Email(final String value) {
-        this.value = value;
+    private Email(final String email) {
+        this.value = email;
     }
 
-    public static Email of(final String value) {
-        return new Email(value);
+    public static Email of(final String email) {
+        return new Email(email);
     }
 
     public String getHost() {

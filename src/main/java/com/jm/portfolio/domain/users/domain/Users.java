@@ -35,20 +35,12 @@ public class Users extends BaseDomain {
     private String nickname;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "first", column = @Column(name = "first_name", nullable = false)),
-            @AttributeOverride(name = "middle", column = @Column(name = "middle_name")),
-            @AttributeOverride(name = "last", column = @Column(name = "last_name", nullable = false))
-    })
-    private Name name;;
+    @AttributeOverride(name = "value", column = @Column(name = "name", nullable = false, length = 50))
+    private Name name;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "year", column = @Column(name = "year", nullable = false)),
-            @AttributeOverride(name = "month", column = @Column(name = "month")),
-            @AttributeOverride(name = "day", column = @Column(name = "day", nullable = false))
-    })
-    private Birth birth;;
+    @AttributeOverride(name = "value", column = @Column(name = "birth", nullable = false, length = 50))
+    private Birth birth;
 
     @Column(name = "withdraw_at")
     private LocalDateTime withdrawAt;
@@ -57,13 +49,13 @@ public class Users extends BaseDomain {
     private String withdrawIp;
 
     @Column(name = "is_withdraw", columnDefinition = "boolean default false")
-    private boolean isWithdraw = false;
+    private boolean isWithdraw;
 
-    @Column(name = "is_disabled", columnDefinition = "boolean default true")
-    private boolean isDisabled = true;
+    @Column(name = "is_disabled", columnDefinition = "boolean default false")
+    private boolean isDisabled;
 
     @Column(name = "is_expired", columnDefinition = "boolean default false")
-    private boolean isExpired = false;
+    private boolean isExpired;
 
     @OneToMany
     @JoinColumn(name = "user_idx")
@@ -85,8 +77,7 @@ public class Users extends BaseDomain {
         this.userRole = userRole;
     }
 
-    public Users hashPassword(PasswordEncoder passwordEncoder) {
+    public void hashPassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
-        return this;
     }
 }
