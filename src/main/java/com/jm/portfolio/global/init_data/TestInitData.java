@@ -8,16 +8,21 @@ import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.model.Name;
 import com.jm.portfolio.domain.users.dao.UserRepository;
 import com.jm.portfolio.domain.users.domain.Users;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
 @Configuration
 @Profile({"local", "dev"})
+@RequiredArgsConstructor
 public class TestInitData {
+
+    private final PasswordEncoder passwordEncoder;
 
     @Bean
     CommandLineRunner testInit(UserRepository userRepository, UserRoleRepository userRoleRepository) {
@@ -31,6 +36,7 @@ public class TestInitData {
                     .name(Name.of("리자", null, "관"))
                     .birth(Birth.of("1997", "05", "01"))
                     .build();
+            admin.hashPassword(passwordEncoder);
 
             // USER
             Users user01 = Users.builder()
@@ -40,6 +46,7 @@ public class TestInitData {
                     .name(Name.of("길동", null, "홍"))
                     .birth(Birth.of("1988", "10", "10"))
                     .build();
+            user01.hashPassword(passwordEncoder);
 
             Users user02 = Users.builder()
                     .email(Email.of("user02@gmail.com"))
@@ -48,6 +55,7 @@ public class TestInitData {
                     .name(Name.of("몽룡", "존", "이"))
                     .birth(Birth.of("1987", "12", "10"))
                     .build();
+            user02.hashPassword(passwordEncoder);
 
             userRepository.saveAll(Arrays.asList(admin, user01, user02));
 

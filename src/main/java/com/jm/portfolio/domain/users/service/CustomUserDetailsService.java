@@ -26,10 +26,16 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         Users user = userRepository.findByEmail(Email.of(email));
+
+        if(user == null) {
+            return null;
+        }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         for(UserRole userRole : user.getUserRole()) {
             authorities.add(new SimpleGrantedAuthority(userRole.getAuthorityCode()));
         }
+
         return new UserDetailsImpl(user, authorities);
     }
 }

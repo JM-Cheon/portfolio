@@ -10,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"name"})
+@ToString(of = {"value"})
 public class Name {
 
     @NotEmpty

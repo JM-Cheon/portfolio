@@ -5,10 +5,10 @@ import lombok.Getter;
 @Getter
 public enum AuthorityEnum {
 
-    GUEST("GUEST"),
-    USER("USER"),
-    INTERIM_ADMIN("INTERIM_ADMIN"),
-    ADMIN("ADMIN");
+    GUEST("ROLE_GUEST"),
+    USER("ROLE_USER"),
+    INTERIM_ADMIN("ROLE_INTERIM_ADMIN"),
+    ADMIN("ROLE_ADMIN");
 
     private String auth;
 

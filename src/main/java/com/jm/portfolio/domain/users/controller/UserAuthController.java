@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.users.controller;
 
-import com.jm.portfolio.domain.users.dto.request.SigninRequest;
+import com.jm.portfolio.domain.users.dto.request.SignInRequest;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.service.SignInService;
 import com.jm.portfolio.domain.users.service.SignUpService;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @Slf4j
 @Tag(name="회원", description = "회원 관련 API")
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class UserAuthController {
 
@@ -38,7 +38,7 @@ public class UserAuthController {
 
     @Operation(summary = "로그인", description = "로그인 메소드")
     @PostMapping(value = "/sign-in")
-    public ResponseEntity<ApiResponse> signIn (@RequestBody @Valid SigninRequest user) {
+    public ResponseEntity<ApiResponse> signIn (@RequestBody @Valid SignInRequest user) {
         return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", signinService.signIn(user)));
     }
 }

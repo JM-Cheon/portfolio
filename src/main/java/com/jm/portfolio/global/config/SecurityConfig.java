@@ -1,6 +1,5 @@
 package com.jm.portfolio.global.config;
 
-import com.jm.portfolio.domain.model.AuthorityEnum;
 import com.jm.portfolio.global.jwt.JwtAccessDeniedHandler;
 import com.jm.portfolio.global.jwt.JwtAuthenticationEntryPoint;
 import com.jm.portfolio.global.jwt.TokenProvider;
@@ -20,7 +19,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -35,10 +33,8 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer configure() {
-        return (web) -> web.ignoring().mvcMatchers(
-                "/api-docs/**",
-                "/swagger-ui/**"
-        );
+        return (web) -> web.ignoring()
+                .mvcMatchers("/api-docs/**", "/swagger-ui/**");
     }
 
     /* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
@@ -46,32 +42,29 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
+                .formLogin().disable()
+                .httpBasic().disable()
                 .exceptionHandling()
-                /* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
-                .accessDeniedHandler(jwtAccessDeniedHandler)			// 필요한 권한 없이 접근 시(403)
+                    /* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
+                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
+                    .accessDeniedHandler(jwtAccessDeniedHandler)			// 필요한 권한 없이 접근 시(403)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").authenticated()
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // cors
-//                .antMatchers("/api/v1/auth/**").permitAll()
-//		    	.antMatchers("/api/v1/user/**").hasAnyRole(
-//                        AuthorityEnum.GUEST.getAuth(),
-//                        AuthorityEnum.USER.getAuth(),
-//                        AuthorityEnum.INTERIM_ADMIN.getAuth(),
-//                        AuthorityEnum.ADMIN.getAuth()
-//                )
-//		    	.antMatchers("/api/v1/admin/**").hasRole(AuthorityEnum.ADMIN.getAuth())
-		    	.anyRequest().permitAll()	// security 설정 완료 후 삭제
+                    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // cors
+                    .antMatchers("/auth/**").permitAll()
+                    .antMatchers("/api/v1/user/**").hasAnyRole("USER", "INTERIM_ADMIN", "ADMIN")
+                    .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                    .antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
+                    .anyRequest().authenticated()
                 .and()
-                /* 세션 인증 방식을 쓰지 않겠다는 설정 */
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    /* 세션 인증 방식을 쓰지 않겠다는 설정 */
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .cors()
+                    .cors()
                 .and()
                 /* jwt 토큰 방식을 쓰겠다는 설정 */
-                .apply(new JwtSecurityConfig(tokenProvider));
+                    .apply(new JwtSecurityConfig(tokenProvider));
 
         return http.build();
     }
@@ -92,6 +85,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 
 }

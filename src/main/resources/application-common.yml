@@ -2,6 +2,10 @@ server:
   tomcat:
     uri-encoding: UTF-8
 
+app:
+  info:
+    appVersion: '0.0.1-SNAPSHOT'
+
 # jpa
 spring:
   jpa:

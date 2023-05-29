@@ -10,13 +10,11 @@ import javax.validation.Valid;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
-public class SigninRequest {
+public class SignInRequest {
     @Valid
     private Email email;
     @Valid
     private String password;
-    @Valid
-    private String signInIp;
 
     public Users toEntity() {
         return Users.builder()

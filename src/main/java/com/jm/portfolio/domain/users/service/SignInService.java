@@ -3,8 +3,7 @@ package com.jm.portfolio.domain.users.service;
 import com.jm.portfolio.domain.admin.dao.SignInLogRepository;
 import com.jm.portfolio.domain.admin.domain.SignInLog;
 import com.jm.portfolio.domain.users.domain.Users;
-import com.jm.portfolio.domain.users.dto.request.SigninRequest;
-import com.jm.portfolio.domain.users.dto.response.UserResponse;
+import com.jm.portfolio.domain.users.dto.request.SignInRequest;
 import com.jm.portfolio.domain.users.exception.SigninFailedException;
 import com.jm.portfolio.domain.users.dao.UserRepository;
 import com.jm.portfolio.global.jwt.TokenProvider;
@@ -27,14 +26,16 @@ public class SignInService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
-    public TokenResponse signIn(SigninRequest user) {
+    public TokenResponse signIn(SignInRequest user) {
         Users getUser = user.toEntity();
         Users userInfo = userRepository.findByEmail(getUser.getEmail());
         if(userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword())) {
+            SignInLog signInLog = new SignInLog(getUser.getEmail(), false);
+            signInLogRepository.save(signInLog);
             throw new SigninFailedException();
         }
 
-        SignInLog signInLog = new SignInLog(userInfo.getEmail(), user.getSignInIp());
+        SignInLog signInLog = new SignInLog(getUser.getEmail(), true);
         signInLogRepository.save(signInLog);
 
         return tokenProvider.generatedToken(userInfo);

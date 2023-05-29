@@ -60,7 +60,7 @@ public class TokenProvider {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
 
-        return new TokenResponse(BEARER_TYPE, user.getEmail().getValue(), accessToken, accessTokenExpiresIn.getTime());
+        return new TokenResponse(BEARER_TYPE, user.getNickname(), accessToken, accessTokenExpiresIn.getTime());
     }
 
     public String getUserId(String token) {
@@ -85,8 +85,10 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
+        log.info("[TokenProvider] authorities {}", authorities);
+
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // Token 유효성 검사

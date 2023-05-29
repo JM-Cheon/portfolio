@@ -30,6 +30,9 @@ public class SignInLog {
     @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false, updatable = false, length = 50))
     private Email email;
 
+    @Column(name = "is_success", updatable = false)
+    private boolean isSuccess;
+
     @Column(name = "sign_in_ip", updatable = false)
     private String signInIp;
 
@@ -44,8 +47,8 @@ public class SignInLog {
     }
 
     @Builder
-    public SignInLog(Email email, String signInIp) {
+    public SignInLog(Email email, boolean isSuccess) {
         this.email = email;
-        this.signInIp = signInIp;
+        this.isSuccess = isSuccess;
     }
 }

@@ -73,13 +73,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.HANDLE_ACCESS_DENIED.getStatus()));
     }
 
-    @ExceptionHandler(TokenException.class)
-    protected ResponseEntity<ErrorResponse> handleTokenException(TokenException e) {
-        log.error("handleTokenException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.TOKEN_EXCEPTION);
-        return new ResponseEntity<>(response, HttpStatus.valueOf(ErrorCode.TOKEN_EXCEPTION.getStatus()));
-    }
-
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
         log.error("handleEntityNotFoundException", e);

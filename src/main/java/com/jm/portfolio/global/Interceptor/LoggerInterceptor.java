@@ -17,9 +17,7 @@ public class LoggerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
         String clientIp = IpUtil.getClientIp(request);
-        log.debug(clientIp);
         MDC.put("ClientIp", clientIp);
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }

@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @Embeddable
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString(of = {"email"})
+@ToString(of = {"value"})
 public class Email {
 
     @javax.validation.constraints.Email
