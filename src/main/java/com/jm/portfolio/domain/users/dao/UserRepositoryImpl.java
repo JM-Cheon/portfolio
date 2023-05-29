@@ -2,6 +2,7 @@ package com.jm.portfolio.domain.users.dao;
 
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.domain.Users;
+import com.jm.portfolio.domain.users.dto.request.UserModificationRequest;
 import com.jm.portfolio.domain.users.dto.response.UserResponse;
 import com.jm.portfolio.global.common.paging.SearchCondition;
 import com.jm.portfolio.global.error.exception.InvalidValueException;
@@ -244,6 +245,17 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     }
 
     @Override
+    public boolean existsByNickname(String nickname) {
+        Integer fetchOne = jpaQueryFactory
+                .selectOne()
+                .from(users)
+                .where(users.nickname.eq(nickname))
+                .fetchFirst();
+
+        return fetchOne != null;
+    }
+
+    @Override
     public Page<UserResponse> getUserList(Pageable page, SearchCondition searchCondition) {
         List<UserResponse> content = jpaQueryFactory
                 .select(Projections.fields(UserResponse.class,
@@ -279,5 +291,52 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
                 .fetch();
 
         return new PageImpl<>(content, page, countUser());
+    }
+
+    @Override
+    public void modifyNickname(UserModificationRequest modifyInfo) {
+        jpaQueryFactory
+                .update(users)
+                .set(users.nickname, modifyInfo.getNickname())
+                .where(users.email.eq(modifyInfo.getEmail()))
+                .execute();
+    }
+
+    @Override
+    public void modifyName(UserModificationRequest modifyInfo) {
+        jpaQueryFactory
+                .update(users)
+                .set(users.name, modifyInfo.getName())
+                .where(users.email.eq(modifyInfo.getEmail()))
+                .execute();
+    }
+
+    @Override
+    public void modifyBirth(UserModificationRequest modifyInfo) {
+        jpaQueryFactory
+                .update(users)
+                .set(users.birth, modifyInfo.getBirth())
+                .where(users.email.eq(modifyInfo.getEmail()))
+                .execute();
+    }
+
+    @Override
+    public void modifyPassword(Users modifyInfo) {
+        jpaQueryFactory
+                .update(users)
+                .set(users.password, modifyInfo.getPassword())
+                .where(users.email.eq(modifyInfo.getEmail()))
+                .execute();
+    }
+
+    @Override
+    public void deleteUserInfo(Users deleteInfo) {
+        jpaQueryFactory
+                .update(users)
+                .set(users.withdrawAt, deleteInfo.getWithdrawAt())
+                .set(users.withdrawIp, deleteInfo.getWithdrawIp())
+                .set(users.isWithdraw, deleteInfo.isWithdraw())
+                .where(users.email.eq(deleteInfo.getEmail()))
+                .execute();
     }
 }

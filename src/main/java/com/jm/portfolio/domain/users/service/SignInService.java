@@ -27,15 +27,15 @@ public class SignInService {
     private final TokenProvider tokenProvider;
 
     public TokenResponse signIn(SignInRequest user) {
-        Users getUser = user.toEntity();
-        Users userInfo = userRepository.findByEmail(getUser.getEmail());
+
+        Users userInfo = userRepository.findByEmail(user.getEmail());
         if(userInfo == null || !passwordEncoder.matches(user.getPassword(), userInfo.getPassword())) {
-            SignInLog signInLog = new SignInLog(getUser.getEmail(), false);
+            SignInLog signInLog = new SignInLog(user.getEmail(), false);
             signInLogRepository.save(signInLog);
             throw new SigninFailedException();
         }
 
-        SignInLog signInLog = new SignInLog(getUser.getEmail(), true);
+        SignInLog signInLog = new SignInLog(user.getEmail(), true);
         signInLogRepository.save(signInLog);
 
         return tokenProvider.generatedToken(userInfo);

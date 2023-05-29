@@ -4,6 +4,7 @@ import com.jm.portfolio.domain.authority.dao.UserRoleRepository;
 import com.jm.portfolio.domain.model.AuthorityEnum;
 import com.jm.portfolio.domain.authority.domain.UserRole;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
+import com.jm.portfolio.domain.users.exception.NicknameDuplicateException;
 import com.jm.portfolio.domain.users.service.SignUpService;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dao.UserRepository;
@@ -31,6 +32,10 @@ public class EmailSignUpServiceImpl implements SignUpService {
 
         if(userRepository.existsByEmail(newUser.getEmail())) {
             throw new EmailDuplicateException(newUser.getEmail());
+        }
+
+        if(userRepository.existsByNickname(newUser.getNickname())) {
+            throw new NicknameDuplicateException(newUser.getNickname());
         }
 
         Users user = newUser.toEntity();

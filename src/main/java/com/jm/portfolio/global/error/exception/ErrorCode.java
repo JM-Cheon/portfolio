@@ -19,7 +19,9 @@ public enum ErrorCode {
 
         // Users
     EMAIL_DUPLICATION(400, "M001", "Email is Duplication"),
-    LOGIN_FAILED(400, "M002", "Login failed"),
+    NICKNAME_DUPLICATION(400, "M002", "Nickname is Duplication"),
+    LOGIN_FAILED(400, "M003", "Login failed"),
+    WRONG_PASSWORD(400, "M004", "Wrong password"),
     ;
 
     private int status;
