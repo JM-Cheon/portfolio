@@ -43,7 +43,7 @@ public class UserManageController {
     }
 
     @Operation(summary = "회원 로그인 이력 조회", description = "회원 로그인 이력 조회 메소드")
-    @GetMapping(value = "/sign-in/list")
+    @GetMapping(value = "/user/sign-in/list")
     public ResponseEntity<ApiResponse> getSingInLog (
             @RequestParam(required = false, defaultValue = "1") String offset,
             @RequestParam(required = false, defaultValue = "idx") String sortBy,
@@ -56,5 +56,11 @@ public class UserManageController {
         SearchCondition searchCondition = new SearchCondition(Integer.parseInt(offset), sortBy, orderBy, searchBy, searchValue, startDate, endDate);
 
         return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", userManageService.getSignInLog(searchCondition)));
+    }
+
+    @Operation(summary = "회원 관련 통계 조회", description = "회원 관련 모든 통계 조회 메소드")
+    @GetMapping(value = "/user/statistics")
+    public ResponseEntity<ApiResponse> getStatistics () {
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", userManageService.getStatistics()));
     }
 }

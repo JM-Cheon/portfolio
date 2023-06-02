@@ -213,11 +213,11 @@ public class UserRepositoryImpl implements UserRepositoryCustom{
     }
 
     @Override
-    public int countUser() {
-        return Math.toIntExact(jpaQueryFactory
+    public Long countUser() {
+        return jpaQueryFactory
                 .select(users.count())
                 .from(users)
-                .fetchFirst());
+                .fetchFirst();
     }
 
     @Override

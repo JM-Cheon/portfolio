@@ -12,7 +12,7 @@ public interface UserRepositoryCustom {
 
     Long maxUserIdx();
 
-    int countUser();
+    Long countUser();
 
     Users findByEmail(Email email);
 
