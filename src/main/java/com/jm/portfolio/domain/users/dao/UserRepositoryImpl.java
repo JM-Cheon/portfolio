@@ -22,7 +22,7 @@ import org.springframework.data.domain.Sort;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static com.jm.portfolio.domain.authority.domain.QUserRole.userRole;
+import static com.jm.portfolio.domain.users.domain.QUserRole.userRole;
 import static com.jm.portfolio.domain.users.domain.QUsers.users;
 
 @Slf4j

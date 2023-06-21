@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.authority.domain;
+package com.jm.portfolio.domain.users.domain;
 
 import com.jm.portfolio.domain.model.AuthorityEnum;
 import lombok.AccessLevel;

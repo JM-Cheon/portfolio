@@ -12,13 +12,13 @@ import javax.validation.Valid;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SignInRequest {
     @Valid
-    private Email email;
+    private String email;
     @Valid
     private String password;
 
     public Users toEntity() {
         return Users.builder()
-                .email(email)
+                .email(Email.of(email))
                 .password(password)
                 .build();
     }

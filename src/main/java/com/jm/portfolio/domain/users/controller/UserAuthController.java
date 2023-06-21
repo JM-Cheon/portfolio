@@ -41,4 +41,10 @@ public class UserAuthController {
     public ResponseEntity<ApiResponse> signIn (@RequestBody @Valid SignInRequest user) {
         return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", signinService.signIn(user)));
     }
+
+    @Operation(summary = "토큰 재발급", description = "Access 토큰 재발급 메소드")
+    @PostMapping(value = "/reissue-access-token")
+    public ResponseEntity<ApiResponse> reissueAccessToken (@RequestBody @Valid String refreshToken) {
+        return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", signinService.reissueAccessToken(refreshToken)));
+    }
 }

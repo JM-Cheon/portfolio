@@ -1,6 +1,6 @@
 package com.jm.portfolio.domain.users.service;
 
-import com.jm.portfolio.domain.authority.domain.UserRole;
+import com.jm.portfolio.domain.users.domain.UserRole;
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.dao.UserRepository;
 import com.jm.portfolio.domain.users.domain.Users;

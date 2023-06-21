@@ -17,6 +17,7 @@ import java.util.Objects;
 @Table(name = "sign_in_log")
 @EqualsAndHashCode(of = {"idx"})
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SignInLog {
 

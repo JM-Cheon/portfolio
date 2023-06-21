@@ -78,6 +78,7 @@ public class UserManageService {
     public StatisticsResponse getStatistics() {
 
         CountVisitorResponse todayVisitInfo = countVisitorRepository.getTodayVisitInfo();
+        // TODO: Redis 로 변경 예정
         if(todayVisitInfo == null) {
             countVisitorRepository.save(new CountVisitor(LocalDate.now(), 0L));
         }

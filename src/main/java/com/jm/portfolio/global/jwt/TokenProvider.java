@@ -1,7 +1,9 @@
 package com.jm.portfolio.global.jwt;
 
-import com.jm.portfolio.domain.authority.domain.UserRole;
+import com.jm.portfolio.domain.users.domain.UserRole;
 import com.jm.portfolio.domain.users.domain.Users;
+import com.jm.portfolio.global.jwt.exception.AccessExpiredException;
+import com.jm.portfolio.global.jwt.exception.RefreshExpiredException;
 import com.jm.portfolio.global.jwt.exception.TokenException;
 import com.jm.portfolio.global.jwt.response.TokenResponse;
 import io.jsonwebtoken.*;
@@ -27,17 +29,24 @@ public class TokenProvider {
 
     private static final String BEARER_TYPE = "Bearer";
     private static final String AUTHORITIES_KEY = "auth";
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 2; // 2시간으로 설정
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14; // 2주로 설정
 
     private final UserDetailsService userDetailsService;
 
-    private final Key key;
+    private final Key accessKey;
+    private final Key refreshKey;
 
-    public TokenProvider (@Value("${jwt.secret}") String secretKey, UserDetailsService userDetailsService) {
+    public TokenProvider (
+            @Value("${jwt.secret.access}") String accessSecretKey,
+            @Value("${jwt.secret.refresh}") String refreshSecretKey,
+            UserDetailsService userDetailsService) {
 
         this.userDetailsService = userDetailsService;
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+        byte[] accessKeyBytes = Decoders.BASE64.decode(accessSecretKey);
+        byte[] refreshKeyBytes = Decoders.BASE64.decode(refreshSecretKey);
+        this.accessKey = Keys.hmacShaKeyFor(accessKeyBytes);
+        this.refreshKey = Keys.hmacShaKeyFor(refreshKeyBytes);
     }
 
     // Token 생성
@@ -52,20 +61,46 @@ public class TokenProvider {
         claims.put(AUTHORITIES_KEY, roles);
 
         long now = System.currentTimeMillis();
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_EXPIRE_TIME);
+
+        String accessToken = accessTokenGenerator(accessTokenExpiresIn, claims);
+        String refreshToken = refreshTokenGenerator(refreshTokenExpiresIn, claims);
+
+        return new TokenResponse(BEARER_TYPE, accessToken, accessTokenExpiresIn.getTime(), refreshToken, refreshTokenExpiresIn.getTime());
+    }
+
+    public TokenResponse reissueAccessToken(String refreshToken) {
+
+        Claims claims = refreshParseClaims(refreshToken);
+
+        long now = System.currentTimeMillis();
 
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
-        String accessToken = Jwts.builder()
-                .setClaims(claims)
-                .setExpiration(accessTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS512)
-                .compact();
 
-        return new TokenResponse(BEARER_TYPE, user.getNickname(), accessToken, accessTokenExpiresIn.getTime());
+        String accessToken = accessTokenGenerator(accessTokenExpiresIn, claims);
+
+        return new TokenResponse(BEARER_TYPE, accessToken, accessTokenExpiresIn.getTime());
+    }
+    public String accessTokenGenerator (Date expiresIn, Claims claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(expiresIn)
+                .signWith(accessKey, SignatureAlgorithm.HS512)
+                .compact();
+    }
+
+    public String refreshTokenGenerator (Date expiresIn, Claims claims) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setExpiration(expiresIn)
+                .signWith(refreshKey, SignatureAlgorithm.HS512)
+                .compact();
     }
 
     public String getUserId(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key).build()
+                .setSigningKey(accessKey).build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
@@ -74,7 +109,7 @@ public class TokenProvider {
     // Token 인증 객체 추출
     public Authentication getAuthentication(String token) {
 
-        Claims claims = parseClaims(token);
+        Claims claims = accessParseClaims(token);
 
         if(claims.get(AUTHORITIES_KEY) == null) {
             throw new TokenException("[ TokenProvider ] 권한 정보가 없는 토큰입니다.");
@@ -85,38 +120,54 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        log.info("[TokenProvider] authorities {}", authorities);
-
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // Token 유효성 검사
-    public boolean validateToken(String token) {
+    public boolean validateAccessToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(accessKey).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.debug("[ TokenProvider ] 잘못된 JWT 서명입니다.");
             throw new TokenException("[ TokenProvider ] 잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-            log.debug("[ TokenProvider ] 만료된 JWT 서명입니다.");
-            throw new TokenException("[ TokenProvider ] 만료된 JWT 서명입니다.");
+            throw new AccessExpiredException("[ TokenProvider ] 만료된 JWT 서명입니다.");
         } catch (UnsupportedJwtException e) {
-            log.debug("[ TokenProvider ] 지원하지 않는 JWT 서명입니다.");
             throw new TokenException("[ TokenProvider ] 지원하지 않는 JWT 서명입니다.");
         } catch (IllegalArgumentException e) {
-            log.debug("[ TokenProvider ] JWT가 잘못되었습니다.");
+            throw new TokenException("[ TokenProvider ] JWT가 잘못되었습니다.");
+        }
+    }
+
+    public void validateRefreshToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(token);
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.debug(e.getMessage());
+            throw new TokenException("[ TokenProvider ] 잘못된 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            throw new RefreshExpiredException("[ TokenProvider ] 만료된 JWT 서명입니다.");
+        } catch (UnsupportedJwtException e) {
+            throw new TokenException("[ TokenProvider ] 지원하지 않는 JWT 서명입니다.");
+        } catch (IllegalArgumentException e) {
             throw new TokenException("[ TokenProvider ] JWT가 잘못되었습니다.");
         }
     }
 
     // Token Claims 추출
-    private Claims parseClaims(String token) {
+    private Claims accessParseClaims(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+            return Jwts.parserBuilder().setSigningKey(accessKey).build().parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
-            log.debug("[ TokenProvider ] 만료된 JWT 서명입니다.");
+            return e.getClaims();
+        }
+    }
+
+    private Claims refreshParseClaims(String token) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(refreshKey).build().parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
     }

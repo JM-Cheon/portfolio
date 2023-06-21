@@ -41,6 +41,6 @@ springdoc:
 
 # jwt
 jwt:
-  secret: yiY5qzsiOzEzHCCXpY5bqFvG3/fVwWDItXFHqPG4v/T4I73QHZygjRUeraSV8CfXjRUYUMsUeuyeVEWGdyVbwg==
-
-secret-key: 72E3FE4785758E3E469FDBA42E79B
+  secret:
+    access: yiY5qzsiOzEzHCCXpY5bqFvG3/fVwWDItXFHqPG4v/T4I73QHZygjRUeraSV8CfXjRUYUMsUeuyeVEWGdyVbwg==
+    refresh: JuDwItiHItpwmAKpKrBPrBupfJmwwChDcqa83G+Nnvwrl6MJrWN1JdquG33Tm2yOOH4hMaDu0QXX3cYAVxvtRQ==

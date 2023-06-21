@@ -19,3 +19,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create
+
+  # redis 설정
+  cache:
+    type: redis
+
+  redis:
+    host: 13.125.156.147
+    port: 6379
+    username: jm
+    password: lex1509!!

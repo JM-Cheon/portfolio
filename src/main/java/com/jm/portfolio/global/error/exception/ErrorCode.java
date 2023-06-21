@@ -14,7 +14,11 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "C004", "Server Error"),
     INVALID_TYPE_VALUE(400, "C005", "Invalid Type Value"),
     HANDLE_ACCESS_DENIED(403, "C006", "Access is Denied"),
-    TOKEN_EXCEPTION(401, "C007", "Token Exception"),
+
+    // Token
+    TOKEN_EXCEPTION(401, "T001", "Invalid Token"),
+    ACCESS_TOKEN_EXPIRED_EXCEPTION(401, "T002", "Access Token Expired"),
+    REFRESH_TOKEN_EXPIRED_EXCEPTION(401, "T003", "Refresh Token Expired"),
 
 
         // Users

@@ -1,6 +1,6 @@
 package com.jm.portfolio.global.config;
 
-import com.jm.portfolio.global.Interceptor.LoggerInterceptor;
+import com.jm.portfolio.global.interceptor.LoggerInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

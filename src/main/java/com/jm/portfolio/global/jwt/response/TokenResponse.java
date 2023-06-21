@@ -10,14 +10,22 @@ import lombok.ToString;
 public class TokenResponse {
 
     private String grantType;
-    private String nickname;
     private String accessToken;
     private long accessTokenExpiresIn;
+    private String refreshToken;
+    private long refreshTokenExpiresIn;
 
-    public TokenResponse(final String grantType, final String nickname, final String accessToken, final long accessTokenExpiresIn) {
+    public TokenResponse(final String grantType, final String accessToken, final long accessTokenExpiresIn) {
         this.grantType = grantType;
-        this.nickname = nickname;
         this.accessToken = accessToken;
         this.accessTokenExpiresIn = accessTokenExpiresIn;
+    }
+
+    public TokenResponse(final String grantType, final String accessToken, final long accessTokenExpiresIn, final String refreshToken, final long refreshTokenExpiresIn) {
+        this.grantType = grantType;
+        this.accessToken = accessToken;
+        this.accessTokenExpiresIn = accessTokenExpiresIn;
+        this.refreshToken = refreshToken;
+        this.refreshTokenExpiresIn = refreshTokenExpiresIn;
     }
 }

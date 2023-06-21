@@ -1,8 +1,8 @@
 package com.jm.portfolio.domain.users.service.impl;
 
-import com.jm.portfolio.domain.authority.dao.UserRoleRepository;
+import com.jm.portfolio.domain.users.dao.UserRoleRepository;
 import com.jm.portfolio.domain.model.AuthorityEnum;
-import com.jm.portfolio.domain.authority.domain.UserRole;
+import com.jm.portfolio.domain.users.domain.UserRole;
 import com.jm.portfolio.domain.users.dto.request.SignupRequest;
 import com.jm.portfolio.domain.users.exception.NicknameDuplicateException;
 import com.jm.portfolio.domain.users.service.SignUpService;

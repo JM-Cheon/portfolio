@@ -3,7 +3,6 @@ package com.jm.portfolio.domain.users.domain;
 import com.jm.portfolio.domain.model.Birth;
 import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.model.Name;
-import com.jm.portfolio.domain.authority.domain.UserRole;
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +27,7 @@ public class Users extends BaseDomain {
     @AttributeOverride(name = "value", column = @Column(name = "email", nullable = false, unique = true, updatable = false, length = 50))
     private Email email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "nickname", nullable = false, unique = true)
@@ -48,21 +47,27 @@ public class Users extends BaseDomain {
     @Column(name = "withdraw_ip")
     private String withdrawIp;
 
-    @Column(name = "is_withdraw", columnDefinition = "boolean default false")
+    @Column(name = "is_withdraw", columnDefinition = "boolean not null default false")
     private boolean isWithdraw;
 
-    @Column(name = "is_disabled", columnDefinition = "boolean default false")
+    @Column(name = "is_disabled", columnDefinition = "boolean not null default false")
     private boolean isDisabled;
 
-    @Column(name = "is_expired", columnDefinition = "boolean default false")
+    @Column(name = "is_expired", columnDefinition = "boolean not null default false")
     private boolean isExpired;
+
+    @Column(name = "sign_up_with")
+    private String signUpWith;
+
+    @Column(name = "snsId")
+    private String snsId;
 
     @OneToMany
     @JoinColumn(name = "user_idx")
     private List<UserRole> userRole;
 
     @Builder
-    public Users (Email email, String password, String nickname, Name name, Birth birth, LocalDateTime withdrawAt, String withdrawIp, boolean isWithdraw, boolean isDisabled, boolean isExpired, List<UserRole> userRole) {
+    public Users (Email email, String password, String nickname, Name name, Birth birth, LocalDateTime withdrawAt, String withdrawIp, boolean isWithdraw, boolean isDisabled, boolean isExpired, String signUpWith, String snsId, List<UserRole> userRole) {
         super();
         this.email = email;
         this.password = password;
@@ -74,6 +79,8 @@ public class Users extends BaseDomain {
         this.isWithdraw = isWithdraw;
         this.isDisabled = isDisabled;
         this.isExpired = isExpired;
+        this.signUpWith = signUpWith;
+        this.snsId = snsId;
         this.userRole = userRole;
     }
 

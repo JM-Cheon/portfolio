@@ -9,12 +9,13 @@ import org.springframework.context.annotation.ComponentScan;
  * 2. SpringSecurity
  * 3. JDBC
  * 4. JPA
- * 5. QueryDSL **
- * 6. JWT **
+ * 5. QueryDSL
+ * 6. JWT
  * 7. Log4j2
  * 8. SpringDoc
  * 9. Lombok
  * 10. Postgresql
+ * 11. Redis
  */
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.jm.portfolio"})

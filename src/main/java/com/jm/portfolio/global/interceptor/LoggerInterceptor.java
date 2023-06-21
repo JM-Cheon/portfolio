@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.Interceptor;
+package com.jm.portfolio.global.interceptor;
 
 import com.jm.portfolio.global.util.IpUtil;
 import lombok.RequiredArgsConstructor;

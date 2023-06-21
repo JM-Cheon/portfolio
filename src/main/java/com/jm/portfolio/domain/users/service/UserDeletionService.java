@@ -3,7 +3,6 @@ package com.jm.portfolio.domain.users.service;
 import com.jm.portfolio.domain.users.dao.UserRepository;
 import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.domain.users.dto.request.UserDeletionRequest;
-import com.jm.portfolio.domain.users.dto.request.UserModificationRequest;
 import com.jm.portfolio.domain.users.exception.PasswordNotMatchException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

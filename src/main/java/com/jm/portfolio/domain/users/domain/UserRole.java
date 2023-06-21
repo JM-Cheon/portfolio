@@ -1,6 +1,6 @@
-package com.jm.portfolio.domain.authority.domain;
+package com.jm.portfolio.domain.users.domain;
 
-import com.jm.portfolio.domain.model.AuthorityEnum;
+import com.jm.portfolio.domain.authority.domain.Authority;
 import com.jm.portfolio.global.common.base.domain.BaseDomain;
 import lombok.*;
 
