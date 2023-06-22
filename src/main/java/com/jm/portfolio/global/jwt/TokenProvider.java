@@ -5,7 +5,7 @@ import com.jm.portfolio.domain.users.domain.Users;
 import com.jm.portfolio.global.jwt.exception.AccessExpiredException;
 import com.jm.portfolio.global.jwt.exception.RefreshExpiredException;
 import com.jm.portfolio.global.jwt.exception.TokenException;
-import com.jm.portfolio.global.jwt.response.TokenResponse;
+import com.jm.portfolio.global.jwt.dto.response.TokenResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

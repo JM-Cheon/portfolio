@@ -1,4 +1,4 @@
-package com.jm.portfolio.domain.users.domain;
+package com.jm.portfolio.global.jwt.domain;
 
 import com.jm.portfolio.global.util.IpUtil;
 import lombok.AccessLevel;
@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

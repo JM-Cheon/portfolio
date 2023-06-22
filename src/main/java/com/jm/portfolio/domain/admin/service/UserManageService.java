@@ -77,16 +77,17 @@ public class UserManageService {
 
     public StatisticsResponse getStatistics() {
 
-        CountVisitorResponse todayVisitInfo = countVisitorRepository.getTodayVisitInfo();
-        // TODO: Redis 로 변경 예정
-        if(todayVisitInfo == null) {
-            countVisitorRepository.save(new CountVisitor(LocalDate.now(), 0L));
-        }
-        Long todayVisit = countVisitorRepository.getTodayVisitInfo().getTotalVisit();
-        Long totalUser = userRepository.countUser();
-        Long monthVisit = countVisitorRepository.monthVisit();
-        List<CountVisitorResponse> monthVisitList = countVisitorRepository.monthVisitList();
+        // TODO: 일일 방문자 수를 카테고리별 방문자 수 로 변경 (redis, scheduler 이용)
+//        CountVisitorResponse todayVisitInfo = countVisitorRepository.getTodayVisitInfo();
+//        if(todayVisitInfo == null) {
+//            countVisitorRepository.save(new CountVisitor(LocalDate.now(), 0L));
+//        }
+//        Long todayVisit = countVisitorRepository.getTodayVisitInfo().getTotalVisit();
+//        Long totalUser = userRepository.countUser();
+//        Long monthVisit = countVisitorRepository.monthVisit();
+//        List<CountVisitorResponse> monthVisitList = countVisitorRepository.monthVisitList();
 
-        return new StatisticsResponse(totalUser, todayVisit, monthVisit, monthVisitList);
+//        return new StatisticsResponse(totalUser, todayVisit, monthVisit, monthVisitList);
+        return new StatisticsResponse();
     }
 }

@@ -1,4 +1,4 @@
-package com.jm.portfolio.global.jwt.response;
+package com.jm.portfolio.global.jwt.dto.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
