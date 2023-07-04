@@ -31,13 +31,13 @@ public class UserAuthController {
      * @return
      */
     @Operation(summary = "회원가입", description = "회원가입 메소드")
-    @PostMapping(value = "/sign-up")
+    @PostMapping(value = "/signup")
     public ResponseEntity<ApiResponse> signUp (@RequestBody @Valid SignupRequest newUser) {
         return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", signUpService.signUp(newUser)));
     }
 
     @Operation(summary = "로그인", description = "로그인 메소드")
-    @PostMapping(value = "/sign-in")
+    @PostMapping(value = "/signin")
     public ResponseEntity<ApiResponse> signIn (@RequestBody @Valid SignInRequest user) {
         return ResponseEntity.ok().body(new ApiResponse(HttpStatus.OK, "success", signinService.signIn(user)));
     }

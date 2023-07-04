@@ -14,6 +14,7 @@ public class TokenResponse {
     private long accessTokenExpiresIn;
     private String refreshToken;
     private long refreshTokenExpiresIn;
+    private String nickname;
 
     public TokenResponse(final String grantType, final String accessToken, final long accessTokenExpiresIn) {
         this.grantType = grantType;
@@ -21,11 +22,12 @@ public class TokenResponse {
         this.accessTokenExpiresIn = accessTokenExpiresIn;
     }
 
-    public TokenResponse(final String grantType, final String accessToken, final long accessTokenExpiresIn, final String refreshToken, final long refreshTokenExpiresIn) {
+    public TokenResponse(final String grantType, final String accessToken, final long accessTokenExpiresIn, final String refreshToken, final long refreshTokenExpiresIn, final String nickname) {
         this.grantType = grantType;
         this.accessToken = accessToken;
         this.accessTokenExpiresIn = accessTokenExpiresIn;
         this.refreshToken = refreshToken;
         this.refreshTokenExpiresIn = refreshTokenExpiresIn;
+        this.nickname = nickname;
     }
 }

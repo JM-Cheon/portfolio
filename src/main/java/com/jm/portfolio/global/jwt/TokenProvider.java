@@ -67,7 +67,7 @@ public class TokenProvider {
         String accessToken = accessTokenGenerator(accessTokenExpiresIn, claims);
         String refreshToken = refreshTokenGenerator(refreshTokenExpiresIn, claims);
 
-        return new TokenResponse(BEARER_TYPE, accessToken, accessTokenExpiresIn.getTime(), refreshToken, refreshTokenExpiresIn.getTime());
+        return new TokenResponse(BEARER_TYPE, accessToken, accessTokenExpiresIn.getTime(), refreshToken, refreshTokenExpiresIn.getTime(), user.getNickname());
     }
 
     public TokenResponse reissueAccessToken(String refreshToken) {
