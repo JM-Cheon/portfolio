@@ -27,12 +27,11 @@ public class Birth {
         this.value = LocalDate.parse(stringBirth, formatter);
     }
 
-    public static Birth of(final String year, final String month, final String day) {
-        String stringBirth = String.format("%s-%s-%s", year, month, day);
-        if(!validationDate(stringBirth)) {
+    public static Birth of(final String birth) {
+        if(!validationDate(birth)) {
             throw new InvalidValueException("Not date");
         }
-        return new Birth(stringBirth);
+        return new Birth(birth);
     }
 
     public String getYear() {

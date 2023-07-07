@@ -33,8 +33,8 @@ public class TestInitData {
                     .email(Email.of("admin@gmail.com"))
                     .password("admin")
                     .nickname("admin")
-                    .name(Name.of("리자", null, "관"))
-                    .birth(Birth.of("1997", "05", "01"))
+                    .name(Name.of("관리자"))
+                    .birth(Birth.of("1997-05-01"))
                     .build();
             admin.hashPassword(passwordEncoder);
 
@@ -43,8 +43,8 @@ public class TestInitData {
                     .email(Email.of("user01@gmail.com"))
                     .password("user01")
                     .nickname("user01")
-                    .name(Name.of("길동", null, "홍"))
-                    .birth(Birth.of("1988", "10", "10"))
+                    .name(Name.of("홍길동"))
+                    .birth(Birth.of("1988-10-10"))
                     .build();
             user01.hashPassword(passwordEncoder);
 
@@ -52,8 +52,8 @@ public class TestInitData {
                     .email(Email.of("user02@gmail.com"))
                     .password("user02")
                     .nickname("user02")
-                    .name(Name.of("몽룡", "존", "이"))
-                    .birth(Birth.of("1987", "12", "10"))
+                    .name(Name.of("몽룡 존 이"))
+                    .birth(Birth.of("1987-12-10"))
                     .build();
             user02.hashPassword(passwordEncoder);
 

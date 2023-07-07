@@ -1,5 +1,6 @@
 package com.jm.portfolio.domain.users.service.impl;
 
+import com.jm.portfolio.domain.model.Email;
 import com.jm.portfolio.domain.users.dao.UserRoleRepository;
 import com.jm.portfolio.domain.model.AuthorityEnum;
 import com.jm.portfolio.domain.users.domain.UserRole;
@@ -30,8 +31,8 @@ public class EmailSignUpServiceImpl implements SignUpService {
     @Override
     public UserResponse signUp(SignupRequest newUser) {
 
-        if(userRepository.existsByEmail(newUser.getEmail())) {
-            throw new EmailDuplicateException(newUser.getEmail());
+        if(userRepository.existsByEmail(Email.of(newUser.getEmail()))) {
+            throw new EmailDuplicateException(Email.of(newUser.getEmail()));
         }
 
         if(userRepository.existsByNickname(newUser.getNickname())) {

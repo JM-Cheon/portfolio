@@ -14,22 +14,22 @@ import javax.validation.Valid;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class SignupRequest {
     @Valid
-    private Email email;
+    private String email;
     @Valid
     private String password;
     @Valid
     private String nickname;
     @Valid
-    private Name name;
+    private String name;
     @Valid
     private Birth birth;
 
     public Users toEntity() {
         return Users.builder()
-                .email(email)
+                .email(Email.of(email))
                 .password(password)
                 .nickname(nickname)
-                .name(name)
+                .name(Name.of(name))
                 .birth(birth)
                 .build();
     }

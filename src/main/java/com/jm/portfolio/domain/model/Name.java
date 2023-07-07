@@ -21,11 +21,12 @@ public class Name {
         this.value = name;
     }
 
-    public static Name of(final String first, final String middle, final String last) {
-        if(StringUtils.isEmpty(middle)) {
-            return new Name(String.format("%s %s", last, first));
+    public static Name of(final String name) {
+        final String[] index = name.split(" ");
+        if(index.length == 2) {
+            return new Name(String.format("%s %s", index[0], index[1]));
         }
-        return new Name(String.format("%s %s %s", first, middle, last));
+        return new Name(String.format("%s %s %s", index[0], index[1], index[2]));
     }
 
     public String getLastName() {
